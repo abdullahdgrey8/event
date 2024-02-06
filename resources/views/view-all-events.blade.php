@@ -162,6 +162,46 @@
                                                         DataTable. The core library provides
                                                         the based framework upon which plug-ins can built.
                                                     </p>
+                                                    <div style="display:flex; gap:10px">
+                                                        <div>
+                                                            <label for="event_code">Event Code:</label><br>
+                                                            <input type="text" id="event_code">
+                                                        </div>
+                                                        <div>
+
+                                                            <label for="event_name">Event Name:</label><br>
+                                                            <input type="text" id="event_name">
+                                                        </div>
+
+                                                        <div>
+
+                                                            <label for="start_date">Start Date:</label><br>
+                                                            <input type="text" id="start_date">
+                                                        </div>
+                                                        <div>
+
+
+                                                            <label for="end_date">End Date:</label><br>
+                                                            <input type="text" id="end_date">
+                                                        </div>
+                                                        <div>
+
+                                                            <label for="status">Status:</label><br>
+                                                            <input type="text" id="status">
+                                                        </div>
+                                                        <div style="margin-top: 30px;">
+
+                                                            <select id="filter_status">
+                                                                <option value="">All Status</option>
+                                                                <option value="active">Active</option>
+                                                                <option value="inactive">Inactive</option>
+                                                            </select>
+                                                        </div>
+                                                        <div style="margin-top: 30px;">
+
+                                                            <button id="apply_filters">Apply</button>
+                                                        </div>
+                                                    </div>
                                                     <table id="event_table" class="table table-striped table-bordered"
                                                         style="width:100%">
                                                         <thead>
