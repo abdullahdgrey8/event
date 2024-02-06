@@ -162,54 +162,47 @@
             <!-- /top navigation -->
 
             <!-- Page Content -->
-            <div class="bg-white vh-100 relative">
-                <h1>Add Event</h1>
-                <div class="mt-5 mb-5">
-                    <div class="row justify-content-center">
-                        <div class="col-md-6">
-                            <form>
-                                @csrf
-                                <input type="hidden" name="id" id="id" value="{{ $id }}">
-                                <div class="form-row">
-                                    <div class="form-group col-md-4">
-                                        <label for="eventName" class="form-label">Event Name *</label>
-                                        <input type="text" class="form-control" id="eventName" name="event_name"
-                                            value="@if($id>0) {{ $row->event_name }} @endif" required>
-                                    </div>
-                                    <div class="form-group col-md-4">
-                                        <label for="description" class="form-label">Description *</label>
-                                        <input class="form-control" id="description" name="description" rows="3"
-                                            required></input>
-                                    </div>
-                                    <div class="form-group col-md-4">
-                                        <label for="startDate" class="form-label">Start Date *</label>
-                                        <input type="date" class="form-control" id="startDate" name="start_date"
-                                            required>
-                                    </div>
-                                </div>
-                                <div class="form-row">
-                                    <div class="form-group col-md-6">
-                                        <label for="endDate" class="form-label">End Date *</label>
-                                        <input type="date" class="form-control" id="endDate" name="end_date" required>
-                                    </div>
-                                    <div class="form-group col-md-6">
-                                        <label for="status" class="form-label">Status *</label>
-                                        <select class="form-control" id="status" name="status" required>
-                                            <option value="1">Active</option>
-                                            <option value="0">Inactive</option>
-                                        </select>
-                                    </div>
-                                </div>
-                                <div class="form-group text-right fixed bottom-0 right-0">
-                                    <button type="submit" class="btn btn-secondary">Save</button>
-                                    <button type="button" class="btn btn-secondary ml-2">Cancel
-                                    </button>
-                                </div>
-                            </form>
-                        </div>
+            <!-- editEvent.blade.php -->
+            <form action="{{ route('events.update', $event->id) }}" method="POST">
+                @csrf
+                @method('PUT')
+                <div class="form-group">
+                    <label for="eventName">Event Name *</label>
+                    <input type="text" class="form-control" id="eventName" name="event_name"
+                        value="{{ $event->event_name }}" required>
+                </div>
+                <div class="form-group">
+                    <label for="description">Description *</label>
+                    <textarea class="form-control" id="description" name="description" rows="3"
+                        required>{{ $event->description }}</textarea>
+                </div>
+                <div class="form-row">
+                    <div class="form-group col-md-6">
+                        <label for="startDate">Start Date *</label>
+                        <input type="date" class="form-control" id="startDate" name="start_date"
+                            value="{{ $event->start_date }}" required>
+                    </div>
+                    <div class="form-group col-md-6">
+                        <label for="endDate">End Date *</label>
+                        <input type="date" class="form-control" id="endDate" name="end_date"
+                            value="{{ $event->end_date }}" required>
                     </div>
                 </div>
-            </div>
+                <div class="form-group">
+                    <label for="status">Status *</label>
+                    <select class="form-control" id="status" name="status" required>
+                        <option value="active" {{ $event->status == 'active' ? 'selected' : '' }}>Active</option>
+                        <option value="inactive" {{ $event->status == 'inactive' ? 'selected' : '' }}>Inactive</option>
+                    </select>
+                </div>
+                <!-- New Input Field -->
+                <div class="form-group">
+                    <label for="newField">New Field *</label>
+                    <input type="text" class="form-control" id="newField" name="new_field"
+                        value="{{ $event->new_field }}" required>
+                </div>
+                <button type="submit" class="btn btn-primary">Update</button>
+            </form>
 
 
             <!-- Page Content -->

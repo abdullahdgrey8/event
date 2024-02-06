@@ -2,7 +2,9 @@
 
 use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
+
 use App\Http\Controllers\EventsController;
+
 
 /*
 |--------------------------------------------------------------------------
@@ -21,9 +23,9 @@ Route::get('/', function () {
 Route::get('/form', function () {
     return view("form");
 });
-Route::get('/eventform', function () {
-    return view("createevent");
-});
+
+
+
 
 Route::get('/dashboard', function () {
     return view('dashboard');
@@ -33,8 +35,15 @@ Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
-    Route::get('/get-all-events', [EventsController::class, 'getAllEvents'])->name('get.all.events');
+
+    Route::post('/event-save', [EventController::class, 'store'])->name('event.store');
+    Route::get('/add-event/{id?}', [EventController::class, 'addEvent'])->name('event.add');
+    //Route::get('/events/first/edit', [EventController::class, 'editFirst'])->name('events.edit');
+  Route::get('/get-all-events', [EventsController::class, 'getAllEvents'])->name('get.all.events');
     Route::get('/view-events', [EventsController::class, 'viewEvents'])->name('viewEvents');
+
 });
 
+
 require __DIR__.'/auth.php';
+
