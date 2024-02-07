@@ -52,18 +52,18 @@
                                 <ul class="nav side-menu">
                                     <li><a><i class="fa fa-home"></i> Home <span class="fa fa-chevron-down"></span></a>
                                         <ul class="nav child_menu">
-                                            <li><a href="{{ url('createevent') }}">Dashboard</a></li>
+                                            <li><a href="{{ url('/dashboard') }}">Dashboard</a></li>
                                         </ul>
                                     </li>
                                     <li><a><i class="fa fa-edit"></i> Forms <span class="fa fa-chevron-down"></span></a>
                                         <ul class="nav child_menu">
-                                            <li><a href="{{ url('form') }}">Form Validation</a></li>
+                                            <li><a href="{{ url('add-event') }}">Create Event</a></li>
                                         </ul>
                                     </li>
-                                    <li><a><i class="fa fa-table"></i> Tables <span
+                                    <li><a><i class="fa fa-table"></i> Events <span
                                                 class="fa fa-chevron-down"></span></a>
                                         <ul class="nav child_menu">
-                                            <li><a href="{{ url('/') }}">Table Dynamic</a></li>
+                                            <li><a href="{{ url('view-events') }}">Table Dynamic</a></li>
                                         </ul>
                                     </li>
                                 </ul>

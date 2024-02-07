@@ -131,6 +131,9 @@ class EventsController extends Controller
         echo json_encode($output);
     }
 
+    
+
+
     public function store(Request $request)
     { 
         // Validate the request
@@ -141,6 +144,13 @@ class EventsController extends Controller
             'end_date' => 'required|date',
             'status' => 'required',
         ]);
+
+        $existingEvent = Events::where('event_name', $request->event_name)->first();
+        if ($existingEvent) {
+            // Event name is a duplicate, return response
+            return response()->json(['duplicate' => true]);
+        }
+
         $user = Auth::user();
         $data = array(
             'event_name'=>$request->event_name,
@@ -160,19 +170,12 @@ class EventsController extends Controller
             $event = new Events;
         }
         $event->fill($data);
-        /*$event->event_name = $request->event_name;
-        $event->description = $request->description;
-        $event->start_date = $request->start_date;
-        $event->end_date = $request->end_date;
-        $event->status = $request->status;
-        $event->user_id = $user->id;
-        $event->qrcode = $this->generateRandomString(10);
-        $event->event_code = $this->generateRandomString(10);
-        */
         $event->save();
 
         return response()->json(['success' => true]);
     }
+    
+
 
     public function addEvent($id = 0)
     {
