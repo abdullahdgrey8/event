@@ -247,6 +247,26 @@
 
 
     </div>
+    <style>
+    .edit-action {
+        display: flex;
+        justify-content: center;
+        gap: 10px;
+        font-size: 20px;
+    }
+
+    .qr-code {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
+
+    .qr-code img {
+        width: 50px;
+        min-height: 50px;
+
+    }
+    </style>
     <script>
     $(document).ready(function() {
         var table = $('#event_table').DataTable({

@@ -20,6 +20,7 @@ class EventsController extends Controller
         $start_date = $request->input('start_date');
         $end_date = $request->input('end_date');
         $status = $request->input('status');
+        echo  $event_code;
         
         $aColumns = ['id', 'event_code', 'event_name','description','start_date', 'end_date','status'];
         $result = DB::table('events')            
@@ -100,11 +101,22 @@ class EventsController extends Controller
             "iTotalDisplayRecords" => $iFilteredTotal,
             "aaData" => array()
         );
-    
+        $baseUrl = url('/');
+        
+
         foreach ($salesData as $aRow) {
             $id = $aRow->id;
+            $qr_code = '<a class="qr-code" href="#"><img src="'.asset('assets/images/qrCode.png').'" /></a>';
+            $editLink=$baseUrl.'/add-event/'.$id;
             
-            $sOptions = 'Edit';
+            $sOptions = '<div class="edit-action">
+            <div class="icon">
+                <i class="fa-regular fa-eye"></i>
+            </div>
+            <div class="icon">
+                <a href="' . $editLink . '"><i class="fa-solid fa-pencil"></i></a>
+            </div>
+        </div>';
             $created_at = date("M j, Y, g:i a", strtotime($aRow->created_at));
             $start_date = date("M j, Y, g:i a", strtotime($aRow->start_date));
             $end_date= date("M j, Y, g:i a", strtotime($aRow->end_date));
@@ -119,7 +131,7 @@ class EventsController extends Controller
                 @utf8_encode($start_date),
                 @utf8_encode($end_date),
                 @utf8_encode($status),
-                @utf8_encode($aRow->qrcode),
+                @utf8_encode($qr_code),
                 @utf8_encode($aRow->url),
                 $sOptions
             );
