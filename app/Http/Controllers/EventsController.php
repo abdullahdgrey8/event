@@ -108,7 +108,16 @@ class EventsController extends Controller
 
         foreach ($salesData as $aRow) {
             $id = $aRow->id;
-            $qr_code = '<a class="qr-code" href="#"><img src="'.asset('assets/images/qrCode.png').'" /></a>';
+            $qr_code = '<a class="qr-code customization_popup_trigger" href="#"><img src="'.asset('assets/images/qrCode.png').'" /></a>
+                        <div class="customization_popup" role="alert">
+                            <a href="#0" class="customization_popup_trigger">View Pop-up</a>
+                            <div class="customization_popup_container">
+                                <p>Side login pop</p>
+                                
+                                <a href="#0" class="customization_popup_close img-replace">X</a>
+                            </div> 
+                        </div>
+            ';
             $editLink=$baseUrl.'/add-event/'.$id;
             
             $sOptions = '<div class="edit-action">
