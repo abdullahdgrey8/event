@@ -128,102 +128,107 @@ class EventsController extends Controller
                 <a href="' . $editLink . '"><i class="fa-solid fa-pencil"></i></a>
             </div>
         </div>';
-            $created_at = date("M j, Y, g:i a", strtotime($aRow->created_at));
-            $start_date = date("M j, Y, g:i a", strtotime($aRow->start_date));
-            $end_date= date("M j, Y, g:i a", strtotime($aRow->end_date));
-            $status= $aRow->status==0 ? 'Inactive':'active';
-            
-            //'id', 'event_code', 'event_name', 'description', 'start_date', 'end_date', 'status','qrcode','url'
-            $output['aaData'][] = array(
-                $id,                
-                @utf8_encode($aRow->event_code),
-                @utf8_encode($aRow->event_name),
-                @utf8_encode($aRow->description),                
-                @utf8_encode($start_date),
-                @utf8_encode($end_date),
-                @utf8_encode($status),
-                @utf8_encode($qr_code),
-                @utf8_encode($aRow->url),
-                $sOptions
-            );
-            ///  $i++;
-        }
-    
-        echo json_encode($output);
-    }
+        $qrCodeImage='<div class="card">
+        <div class="card-header">
+            <h2>Simple QR Code</h2>
+        </div>
+        <div class="card-body">
+        <?php
+        //generate qr code here
+        ?>
+</div>
+</div>';
+$created_at = date("M j, Y, g:i a", strtotime($aRow->created_at));
+$start_date = date("M j, Y, g:i a", strtotime($aRow->start_date));
+$end_date= date("M j, Y, g:i a", strtotime($aRow->end_date));
+$status= $aRow->status==0 ? 'Inactive':'active';
 
-    
+//'id', 'event_code', 'event_name', 'description', 'start_date', 'end_date', 'status','qrcode','url'
+$output['aaData'][] = array(
+$id,
+@utf8_encode($aRow->event_code),
+@utf8_encode($aRow->event_name),
+@utf8_encode($aRow->description),
+@utf8_encode($start_date),
+@utf8_encode($end_date),
+@utf8_encode($status),
+@utf8_encode($qr_code),
+@utf8_encode($aRow->url),
+$sOptions
+);
+/// $i++;
+}
 
-
-    public function store(Request $request)
-    { 
-        // Validate the request
-        $request->validate([
-            'event_name' => 'required',
-            'description' => 'required',
-            'start_date' => 'required|date',
-            'end_date' => 'required|date',
-            'status' => 'required',
-        ]);
-
-        $existingEvent = Events::where('event_name', $request->event_name)->first();
-        if ($existingEvent) {
-            // Event name is a duplicate, return response
-            return response()->json(['duplicate' => true]);
-        }
-
-        $user = Auth::user();
-        $data = array(
-            'event_name'=>$request->event_name,
-            'description'=>$request->description,
-            'start_date'=>$request->start_date,
-            'end_date'=>$request->end_date,
-            'status'=>$request->status,
-            'user_id'=>$user->id,
-            'qrcode'=>$this->generateRandomString(10),
-            'event_code'=>$this->generateRandomString(10),
-            'url' => 'https://example.com'
-        );
-        
-        if($request->id>0){
-            $event = Events::find($request->id);
-        }else{
-            $event = new Events;
-        }
-        $event->fill($data);
-        $event->save();
-
-        return response()->json(['success' => true]);
-    }
-    
+echo json_encode($output);
+}
 
 
-    public function addEvent($id = 0)
-    {
 
-        // return view("createevent",compact($id));
-        $row = array();
-        if($id>0){
-            $rs = DB::table("events")->where('id',$id);
-            if($rs->count()>0){
-                $row = $rs->first();
-            }else{
-                die("record does not exist");
-            }
-        }
-        return view('createevent')->with(compact('id','row'));
-    }
-    function generateRandomString($length = 10) {
-        // Define the character set from which to generate the random string
-        $characters = '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ';
-        $charactersLength = strlen($characters);
-        $randomString = '';
-        
-        // Generate random characters until the desired length is achieved
-        for ($i = 0; $i < $length; $i++) {
-            $randomString .= $characters[rand(0, $charactersLength - 1)];
-        }
-        
-        return $randomString;
-    }
-}    
+
+public function store(Request $request)
+{
+// Validate the request
+$request->validate([
+'event_name' => 'required',
+'description' => 'required',
+'start_date' => 'required|date',
+'end_date' => 'required|date',
+'status' => 'required',
+]);
+
+$existingEvent = Events::where('event_name', $request->event_name)->first();
+if ($existingEvent) {
+// Event name is a duplicate, return response
+return response()->json(['duplicate' => true]);
+}
+
+$user = Auth::user();
+$data = array(
+'event_name'=>$request->event_name,
+'description'=>$request->description,
+'start_date'=>$request->start_date,
+'end_date'=>$request->end_date,
+'status'=>$request->status,
+'user_id'=>$user->id,
+'qrcode'=>$this->generateRandomString(10),
+'event_code'=>$this->generateRandomString(10),
+'url' => 'https://example.com'
+);
+
+if($request->id>0){
+$event = Events::find($request->id);
+}else{
+$event = new Events;
+}
+$event->fill($data);
+$event->save();
+
+return response()->json(['success' => true]);
+}
+
+
+
+public function addEvent($id = 0)
+{
+
+// return view("createevent",compact($id));
+$row = array();
+if($id>0){
+$rs = DB::table("events")->where('id',$id);
+if($rs->count()>0){
+$row = $rs->first();
+}else{
+die("record does not exist");
+}
+}
+return view('createevent')->with(compact('id','row'));
+}
+function generateRandomString($length = 10) {
+// Define the character set from which to generate the random string
+$characters = '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ';
+$charactersLength = strlen($characters);
+$randomString = '';
+
+// Generate random characters until the desired length is achieved
+for ($i = 0; $i < $length; $i++) { $randomString .=$characters[rand(0, $charactersLength - 1)]; } return $randomString;
+    } }

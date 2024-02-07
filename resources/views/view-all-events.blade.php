@@ -200,17 +200,21 @@
                                                             </div>
 
                                                             <div style="margin-top: 25px;">
-
+                                                                <a href=""></a>
                                                                 <button id="apply_filters"
                                                                     class="btn btn-secondary">Apply</button>
                                                             </div>
                                                         </div>
 
                                                         <div style="margin-top: 25px;">
-
-                                                            <button style="margin-right: 15px;" class="btn btn-primary"
+                                                            <?php
+                                                            $baseUrl = url('/');
+                                                            echo '<a id="apply_filters" class="btn btn-primary" href="'.$baseUrl.'/add-event'.'">Add New
+                                                            Event</a>'
+                                                            ?>
+                                                            <!-- <button style="margin-right: 15px;" class="btn btn-primary"
                                                                 id="apply_filters">Add New
-                                                                Event</button>
+                                                                Event</button> -->
                                                         </div>
                                                     </div>
                                                     <table id="event_table" class="table table-striped table-bordered"
@@ -281,7 +285,7 @@
     }
 
 
-    .customization_popup_trigger {
+    /* .customization_popup_trigger {
         display: block;
         width: 170px;
         height: 50px;
@@ -296,12 +300,12 @@
         border-radius: 50em;
         background: #2196F3;
         box-shadow: 0 3px 0 rgba(0, 0, 0, 0.07);
-    }
+    } */
 
     @media only screen and (min-width: 1170px) {
-        .customization_popup_trigger {
+        /* .customization_popup_trigger {
             margin: 6em auto;
-        }
+        } */
     }
 
 
@@ -453,21 +457,21 @@ xpopup
     }
     </style>
     <script>
-    jQuery(document).ready(function($) {
-        $('.customization_popup_trigger').on('click', function(event) {
+    jQuery(document).ready(function() {
+        jQuery('.customization_popup_trigger').on('click', function(event) {
             event.preventDefault();
-            $('.customization_popup').addClass('is-visible');
+            jQuery('.customization_popup').addClass('is-visible');
         });
-        $('.customization_popup').on('click', function(event) {
-            if ($(event.target).is('.customization_popup_close') || $(event.target).is(
+        jQuery('.customization_popup').on('click', function(event) {
+            if (jQuery(event.target).is('.customization_popup_close') || $(event.target).is(
                     '.customization_popup')) {
                 event.preventDefault();
-                $(this).removeClass('is-visible');
+                jQuery(this).removeClass('is-visible');
             }
         });
-        $(document).keyup(function(event) {
+        jQuery(document).keyup(function(event) {
             if (event.which == '27') {
-                $('.customization_popup').removeClass('is-visible');
+                jQuery('.customization_popup').removeClass('is-visible');
             }
         });
     });

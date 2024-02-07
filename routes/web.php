@@ -4,6 +4,7 @@ use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
 
 use App\Http\Controllers\EventsController;
+use App\Http\Controllers\QrCodeController;
 
 
 /*
@@ -35,6 +36,9 @@ Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
+
+    //qr code library 
+    Route::get('/qrcode', [QrCodeController::class, 'index']);
 
     Route::post('/event-save', [EventsController::class, 'store'])->name('event.store');
     Route::get('/add-event/{id?}', [EventsController::class, 'addEvent'])->name('event.add');
