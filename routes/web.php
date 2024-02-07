@@ -39,11 +39,10 @@ Route::middleware('auth')->group(function () {
     Route::post('/event-save', [EventController::class, 'store'])->name('event.store');
     Route::get('/add-event/{id?}', [EventController::class, 'addEvent'])->name('event.add');
     //Route::get('/events/first/edit', [EventController::class, 'editFirst'])->name('events.edit');
-  Route::get('/get-all-events', [EventsController::class, 'getAllEvents'])->name('get.all.events');
+    Route::get('/get-all-events', [EventsController::class, 'getAllEvents'])->name('get.all.events');
     Route::get('/view-events', [EventsController::class, 'viewEvents'])->name('viewEvents');
 
 });
 
 
 require __DIR__.'/auth.php';
-

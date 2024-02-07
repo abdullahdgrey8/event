@@ -44,7 +44,7 @@ class EventsController extends Controller
     
         $iStart = $request->get('iDisplayStart');
         $iPageSize = $request->get('iDisplayLength');
-    
+        // $sOrder='';
         if ($request->get('iSortCol_0') != null) { //iSortingCols
             $sOrder = "ORDER BY  ";
     

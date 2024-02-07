@@ -165,41 +165,46 @@
                                                     <div style="display:flex; gap:10px">
                                                         <div>
                                                             <label for="event_code">Event Code:</label><br>
-                                                            <input type="text" id="event_code">
+                                                            <input type="text" id="event_code" name="event_code"
+                                                                class="form-control">
                                                         </div>
                                                         <div>
 
                                                             <label for="event_name">Event Name:</label><br>
-                                                            <input type="text" id="event_name">
+                                                            <input type="text" id="event_name" name="event_name"
+                                                                class="form-control">
                                                         </div>
 
                                                         <div>
 
                                                             <label for="start_date">Start Date:</label><br>
-                                                            <input type="text" id="start_date">
+                                                            <input type="date" id="start_date" name="start_date"
+                                                                class="form-control">
                                                         </div>
                                                         <div>
 
 
                                                             <label for="end_date">End Date:</label><br>
-                                                            <input type="text" id="end_date">
+                                                            <input type="date" id="end_date" name="end_date"
+                                                                class="form-control">
                                                         </div>
                                                         <div>
 
                                                             <label for="status">Status:</label><br>
-                                                            <input type="text" id="status">
-                                                        </div>
-                                                        <div style="margin-top: 30px;">
-
-                                                            <select id="filter_status">
-                                                                <option value="">All Status</option>
-                                                                <option value="active">Active</option>
-                                                                <option value="inactive">Inactive</option>
+                                                            <select name="status" id="status" class="form-control">
+                                                                <option value="">Select Status</option>
+                                                                <option value="1">Active</option>
+                                                                <option value="0">inactive</option>
                                                             </select>
                                                         </div>
+
                                                         <div style="margin-top: 30px;">
 
                                                             <button id="apply_filters">Apply</button>
+                                                        </div>
+                                                        <div style="margin-top: 30px;">
+
+                                                            <button id="apply_filters">Add New Event</button>
                                                         </div>
                                                     </div>
                                                     <table id="event_table" class="table table-striped table-bordered"
@@ -243,30 +248,59 @@
 
     </div>
     <script>
-    var table = $('#event_table').DataTable({
-        "aoColumnDefs": [{
-            "bSortable": false,
-            "aTargets": [0, 7, 8, 9]
-        }],
-        "bProcessing": true,
-        "bServerSide": true,
-        "aaSorting": [
-            [4, "desc"]
-        ],
-        "sPaginationType": "full_numbers",
-        "sAjaxSource": "{{ route('get.all.events') }}",
-        "language": {
-            "infoFiltered": "",
-            "processing": "Loading. Please wait..."
-        },
-        "aLengthMenu": [
-            [10, 50, 100, 500],
-            [10, 50, 100, 500]
-        ],
-        "fnServerParams": function(aoData) {
+    $(document).ready(function() {
+        var table = $('#event_table').DataTable({
+            "aoColumnDefs": [{
+                "bSortable": false,
+                "aTargets": [0, 7, 8, 9]
+            }],
+            "bProcessing": true,
+            "bServerSide": true,
+            "aaSorting": [
+                [4, "desc"]
+            ],
+            "sPaginationType": "full_numbers",
+            "sAjaxSource": "{{ route('get.all.events') }}",
+            "language": {
+                "infoFiltered": "",
+                "processing": "Loading. Please wait..."
+            },
+            "aLengthMenu": [
+                [10, 50, 100, 500],
+                [10, 50, 100, 500]
+            ],
+            "fnServerParams": function(aoData) {
+                aoData.push({
+                    "name": "event_code",
+                    "value": $("#event_code").val()
+                });
+                aoData.push({
+                    "name": "event_name",
+                    "value": $("#event_name").val()
+                });
+                aoData.push({
+                    "name": "start_date",
+                    "value": $("#start_date").val()
+                });
+                aoData.push({
+                    "name": "end_date",
+                    "value": $("#end_date").val()
+                });
+                aoData.push({
+                    "name": "status",
+                    "value": $("#status").val()
+                });
 
-
-        }
+            }
+        });
+        var objTable = table;
+        /*$("#event_code, #event_name, #start_date, #end_date, #status").change(function() {
+            objTable.draw();
+        });
+        */
+        $("#apply_filters").click(function() {
+            objTable.draw();
+        });
     });
     </script>
 </body>
