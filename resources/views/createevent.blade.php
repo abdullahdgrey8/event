@@ -36,7 +36,7 @@
                             <ul class="nav side-menu">
                                 <li><a><i class="fa fa-home"></i> Home <span class="fa fa-chevron-down"></span></a>
                                     <ul class="nav child_menu">
-                                        <li><a href="{{ url('eventform') }}">Dashboard</a></li>
+                                        <li><a href="{{ url('add-event') }}">Dashboard</a></li>
                                     </ul>
                                 </li>
                                 <li><a><i class="fa fa-edit"></i> Forms <span class="fa fa-chevron-down"></span></a>
@@ -179,12 +179,12 @@
                                     <div class="form-group col-md-4">
                                         <label for="description" class="form-label">Description *</label>
                                         <input class="form-control" id="description" name="description" rows="3"
-                                            required></input>
+                                            value="@if($id>0) {{ $row->description }} @endif" required></input>
                                     </div>
                                     <div class="form-group col-md-4">
                                         <label for="startDate" class="form-label">Start Date *</label>
                                         <input type="date" class="form-control" id="startDate" name="start_date"
-                                            required>
+                                            value="@if($id>0) {{ $row->start_date }} @endif" required>
                                     </div>
                                 </div>
                                 <div class="form-row">
@@ -192,7 +192,7 @@
                                         <label for="endDate" class="form-label">End Date *</label>
                                         <input type="date" class="form-control" id="endDate" name="end_date" required>
                                     </div>
-                                    <div class="form-group col-md-6">
+                                    <div class=" form-group col-md-6">
                                         <label for="status" class="form-label">Status *</label>
                                         <select class="form-control" id="status" name="status" required>
                                             <option value="1">Active</option>
@@ -213,6 +213,11 @@
 
 
             <!-- Page Content -->
+            <div id="successPopup"
+                style="width: 600px; height: 250px; display: none; position: fixed; top: 50%; left: 50%; transform: translate(-50%, -50%); background-color: white; border: 1px solid black; padding: 20px; text-align: center;">
+                <p style="margin-top:50px; font-size:20px;">Event Created Successfully <button
+                        id="closePopupBtn">X</button></p>
+            </div>
 
         </div>
     </div>
@@ -229,14 +234,19 @@
                 method: 'POST',
                 data: $(this).serialize(),
                 success: function(response) {
-                    // Handle success response
-                    console.log(response);
+                    // Show success popup
+                    $('#successPopup').show();
                 },
                 error: function(xhr, status, error) {
                     // Handle error response
                     console.error(xhr.responseText);
                 }
             });
+        });
+
+        // Close popup when X button is clicked
+        $('#closePopupBtn').click(function() {
+            $('#successPopup').hide();
         });
     });
     </script>
@@ -255,7 +265,7 @@
     <!-- NProgress -->
     <script src="{{ asset('assets/nprogress/nprogress.js') }}"></script>
     <!-- validator -->
-    <!-- <script src="../vendors/validator/validator.js"></script> -->
+    <!-- <script src="{{ asset('assets/validator/validator.js') }}"></script> -->
 
     <!-- Custom Theme Scripts -->
     <script src="{{ asset('/build/js/custom.min.js') }}"></script>
