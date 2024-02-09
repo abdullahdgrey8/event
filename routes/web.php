@@ -45,6 +45,7 @@ Route::middleware('auth')->group(function () {
     //Route::get('/events/first/edit', [EventController::class, 'editFirst'])->name('events.edit');
     Route::get('/get-all-events', [EventsController::class, 'getAllEvents'])->name('get.all.events');
     Route::get('/view-events', [EventsController::class, 'viewEvents'])->name('viewEvents');
+    Route::post('/generate-qr-code', [EventsController::class, 'generateQRCode'])->name('generate.qr.code');
 
 });
 

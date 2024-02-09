@@ -1,7 +1,7 @@
 @include('components.Head')
 
 <x-navbar />
-
+<link rel="stylesheet" href="//code.jquery.com/ui/1.13.2/themes/base/jquery-ui.css">
 <body class="nav-md">
     <div class="container body">
         <div class="main_container">
@@ -169,15 +169,22 @@
                         <div class="col-md-6">
 
                             <form id="myform">
-                                <div id="duplicateEventAlert" class="alert alert-danger d-none" role="alert">
+                                <input type="hidden" name='slug' id='slug' value="@if($id>0) {{ $row->slug }} @endif">                                <div id="duplicateEventAlert" class="alert alert-danger d-none" role="alert">
                                     This event has already been created.
                                 </div>
                                 <div class="alert alert-primary d-none" role="alert" id="successPopup">
-                                    Event has been created successfully!
+                                    
                                 </div>
                                 @csrf
                                 <input type="hidden" name="id" id="id" value="{{ $id }}">
                                 <div class="form-row">
+                                    @if($id>0)
+                                    <div class="form-group col-md-4">
+                                        <label for="eventName" class="form-label">Event Name *</label>
+                                        <input disabled type="text" class="form-control" id="event_code" name="event_code"
+                                            value="@if($id>0) {{ $row->event_code }} @endif"></input>
+                                    </div>
+                                    @endif
                                     <div class="form-group col-md-4">
                                         <label for="eventName" class="form-label">Event Name *</label>
                                         <input type="text" class="form-control" id="eventName" name="event_name"
@@ -190,14 +197,14 @@
                                     </div>
                                     <div class="form-group col-md-4">
                                         <label for="startDate" class="form-label">Start Date *</label>
-                                        <input type="date" class="form-control" id="startDate" name="start_date"
-                                            value="@if($id>0) {{ $row->start_date }} @endif">
+                                        <input type="text" class="form-control" id="startDate" name="start_date"
+                                            value="@if($id>0) {{ date('m/d/Y', strtotime($row->start_date)) }} @endif">
                                     </div>
                                 </div>
                                 <div class="form-row">
                                     <div class="form-group col-md-6">
                                         <label for="endDate" class="form-label">End Date *</label>
-                                        <input type="date" class="form-control" id="endDate" name="end_date">
+                                        <input type="text" value="@if($id>0) {{ date('m/d/Y', strtotime($row->end_date)) }} @endif" class="form-control" id="endDate" name="end_date">
                                     </div>
                                     <div class=" form-group col-md-6">
                                         <label for="status" class="form-label">Status *</label>
@@ -244,11 +251,22 @@
     <!-- <script src="../build/js/custom.min.js"></script> -->
 
     <script src="https://cdn.jsdelivr.net/jquery.validation/1.16.0/jquery.validate.min.js"></script>
+    <script src="https://code.jquery.com/ui/1.13.2/jquery-ui.js"></script>
 
 
 
     <script>
     $(document).ready(function() {
+        
+  $( function() {
+    $( "#startDate" ).datepicker();
+  } );
+ 
+ 
+  $( function() {
+    $( "#endDate" ).datepicker();
+  } );
+ 
         $('#myform').submit(function(event) {
             event.preventDefault();
             $.ajax({
@@ -257,10 +275,12 @@
                 data: $(this).serialize(),
                 success: function(response) {
                     console.log(response);
+                    $('#successPopup').html(response.message);
                     if (response.success) {
                         $('#successPopup').removeClass('d-none');
                     } else if (response.duplicate) {
                         $('#duplicateEventAlert').removeClass('d-none');
+                        
                         setTimeout(function() {
                             $('#duplicateEventAlert').addClass('d-none');
                         }, 5000);
@@ -279,7 +299,17 @@
     </script>
 
     <script>
+        function generateSlug(title) {
+        return title.trim().toLowerCase().replace(/\s+/g, '-').replace(/[^\w\-]+/g, '');
+    }
     $(document).ready(function() {
+
+        $('#eventName').on('keyup', function () {
+            var title = $('#eventName').val();
+            var slug = generateSlug(title);
+            $('#slug').val(slug);
+
+        });
         $("#myform").validate({
             rules: {
                 event_name: {
