@@ -187,5 +187,6 @@ return [
         'QrCode' => SimpleSoftwareIO\QrCode\Facades\QrCode::class,
     ])->toArray(),
     'resumes' => base_path() . '/storage/canidates/',
+    'forntend_url' => "https://thetowertech.com",
 
 ];

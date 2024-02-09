@@ -14,10 +14,7 @@ return new class extends Migration
     {
         //
         Schema::table('events', function (Blueprint $table) {                        
-            $table->text('description')->after('user_id')->nullable();
-            $table->string("event_code")->after('description')->nullable();
-            $table->string('url')->after('event_code')->nullable();
-            $table->tinyInteger("status")->after('event_code')->default(0)->nullable();
+           
         });
     }
  
