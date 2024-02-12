@@ -29,7 +29,7 @@
                     <br />
 
                     <!-- sidebar menu -->
-                    <div id="sidebar-menu" class="main_menu_side hidden-print main_menu">
+                    <!-- <div id="sidebar-menu" class="main_menu_side hidden-print main_menu">
                         <div class="menu_section">
                             <h3>General</h3>
                             <ul class="nav side-menu">
@@ -51,7 +51,8 @@
                             </ul>
                         </div>
 
-                    </div>
+                    </div> -->
+                    @include('layouts.sidebar')
                     <!-- /sidebar menu -->
 
                     
@@ -59,7 +60,7 @@
             </div>
 
             <!-- top navigation -->
-            <div class="top_nav">
+            <!-- <div class="top_nav">
                 <div class="nav_menu">
                     <div class="nav toggle">
                         <a id="menu_toggle"><i class="fa fa-bars"></i></a>
@@ -157,7 +158,7 @@
                         </ul>
                     </nav>
                 </div>
-            </div>
+            </div> -->
             <!-- /top navigation -->
 
             <!-- page content -->

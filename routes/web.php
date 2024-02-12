@@ -7,6 +7,7 @@ use App\Http\Controllers\EventsController;
 use App\Http\Controllers\QrCodeController;
 
 
+
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -19,7 +20,8 @@ use App\Http\Controllers\QrCodeController;
 */
 
 Route::get('/', function () {
-    return view('welcome');
+   /// return view('welcome');
+   return redirect('/login');
 });
 Route::get('/form', function () {
     return view("form");
@@ -45,8 +47,9 @@ Route::middleware('auth')->group(function () {
     //Route::get('/events/first/edit', [EventController::class, 'editFirst'])->name('events.edit');
     Route::get('/get-all-events', [EventsController::class, 'getAllEvents'])->name('get.all.events');
     Route::get('/view-events', [EventsController::class, 'viewEvents'])->name('viewEvents');
+    Route::get('/candidates/{id?}', [EventsController::class, 'eventCandidates'])->name('event.candidates');
     Route::post('/generate-qr-code', [EventsController::class, 'generateQRCode'])->name('generate.qr.code');
-
+    Route::get('/logout', [ProfileController::class, 'destroy'])->name('get.destroy');
 });
 
 

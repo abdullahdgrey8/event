@@ -241,4 +241,9 @@ class EventsController extends Controller
         ///echo slug::size(300)->generate($evnet->url) ;
         //{!! slug::size(300)->generate('https://www.linkedin.com/in/abdullahkhalid533/') !!}
     }
+    function eventCandidates(Request $request){
+        $candidateId = $request->route('id');
+print_r($candidateId);
+exit;
+    }
 }
