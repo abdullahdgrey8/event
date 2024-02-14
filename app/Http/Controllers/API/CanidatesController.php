@@ -8,9 +8,8 @@ use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Facades\File;
-use App\Models\Candidates;
-use App\Models\Events;
 use App\Models\Categories;
+use App\Models\Events;
 
 class CanidatesController extends BaseController {
 
@@ -35,14 +34,14 @@ class CanidatesController extends BaseController {
                 $status = 'event_id_not_exist';
                 $message = "invalid event";
                 $code = 711;
-                return response()->json(array('status' => $status, 'message' =>$message, 'code' => $code), 200);
+                return response()->json(array('status' => $status, 'message' => $message, 'code' => $code), 200);
             }
             $rsCategories = Categories::where('id', $request->category_id);
             if ($rsCategories->count() == 0) {
                 $status = 'category_id_not_exist';
                 $message = "invalid category";
                 $code = 710;
-                return response()->json(array('status' => $status, 'message' =>$message, 'code' => $code), 200);
+                return response()->json(array('status' => $status, 'message' => $message, 'code' => $code), 200);
             }
 
             if ($request->hasFile('resume')) {
@@ -95,6 +94,53 @@ class CanidatesController extends BaseController {
             return response()->json([
                         'status' => $status,
                         'message' => $message
+                            ], 200);
+        } catch (\Exception $e) {
+            Log::error($e->getMessage());
+            return response()->json([
+                        'status' => 'Exception',
+                        'message' => $e->getMessage(),
+                            ], 500);
+        }
+    }
+
+    public function getCanidateCategories(Request $request) {
+
+        try {
+            $categories = Categories::get();
+            return response()->json([
+                        'status' => 'success',
+                        'message' => "",
+                        'categories' => $categories
+                            ], 200);
+        } catch (\Exception $e) {
+            Log::error($e->getMessage());
+            return response()->json([
+                        'status' => 'Exception',
+                        'message' => $e->getMessage(),
+                            ], 500);
+        }
+    }
+
+    public function getEventByName(Request $request) {
+        try {
+            $rs = Events::where(array(
+                        'status' => 1,
+                        'slug' => $request->name,
+            ));
+            $row = array();
+            if ($rs->count() > 0) {
+                $status = 'success';
+                $message = "";
+                $row = $rs->first();
+            } else {
+                $status = 'not-exist';
+                $message = "event does't exist";
+            }
+            return response()->json([
+                        'status' => 'success',
+                        'message' => "",
+                        'data' => $row
                             ], 200);
         } catch (\Exception $e) {
             Log::error($e->getMessage());

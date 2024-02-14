@@ -28,7 +28,7 @@ class EventsController extends Controller
 
         $aColumns = ['id', 'event_code', 'event_name', 'description', 'start_date', 'end_date', 'status'];
         $result = DB::table('events')
-            ->select(['id', 'event_code', 'event_name', 'description', 'start_date', 'end_date', 'status', 'slug', 'url', 'created_at']);
+            ->select(['id', 'event_code', 'event_name', 'description', 'start_date', 'end_date', 'status', 'slug', 'created_at']);
 
         if ($event_code)
             $result->where('event_code', $event_code);
@@ -110,7 +110,7 @@ class EventsController extends Controller
         $url = config('app.forntend_url');
         foreach ($salesData as $aRow) {
             $id = $aRow->id;
-            $qr_url = $aRow->url;
+           // $qr_url = $aRow->url;
             $qr_code = '<a class="qr-code open-modal" data="' . $id . '" href="javascript:void(0)"><img src="assets/images/qrcode.png" /></a>
             
 ';
