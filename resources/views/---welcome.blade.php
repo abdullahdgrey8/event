@@ -1,22 +1,7 @@
 @include('components.Head')
 
 <body>
-    <!-- class="antialiased" -->
-    <!-- <div class="relative sm:flex sm:justify-center sm:items-center min-h-screen bg-dots-darker bg-center bg-gray-100 dark:bg-dots-lighter dark:bg-gray-900 selection:bg-red-500 selection:text-white">
-            @if (Route::has('login'))
-                <div class="sm:fixed sm:top-0 sm:right-0 p-6 text-right z-10">
-                    @auth
-                        <a href="{{ url('/dashboard') }}" class="font-semibold text-gray-600 hover:text-gray-900 dark:text-gray-400 dark:hover:text-white focus:outline focus:outline-2 focus:rounded-sm focus:outline-red-500">Dashboard</a>
-                    @else
-                        <a href="{{ route('login') }}" class="font-semibold text-gray-600 hover:text-gray-900 dark:text-gray-400 dark:hover:text-white focus:outline focus:outline-2 focus:rounded-sm focus:outline-red-500">Log in</a>
 
-                        @if (Route::has('register'))
-                            <a href="{{ route('register') }}" class="ml-4 font-semibold text-gray-600 hover:text-gray-900 dark:text-gray-400 dark:hover:text-white focus:outline focus:outline-2 focus:rounded-sm focus:outline-red-500">Register</a>
-                        @endif
-                    @endauth
-                </div>
-            @endif
-        </div> -->
     <x-navbar />
     <!-- New Content -->
     <div class="nav-md">
@@ -45,69 +30,12 @@
 
                         <br />
 
-                        <!-- sidebar menu -->
-                        <!-- <div id="sidebar-menu" class="main_menu_side hidden-print main_menu">
-                            <div class="menu_section">
-                                <h3>General</h3>
-                                <ul class="nav side-menu">
-                                    <li><a><i class="fa fa-home"></i> Home <span class="fa fa-chevron-down"></span></a>
-                                        <ul class="nav child_menu">
-                                            <li><a href="{{ url('/dashboard') }}">Dashboard</a></li>
-                                        </ul>
-                                    </li>
-                                    <li><a><i class="fa fa-edit"></i> Forms <span class="fa fa-chevron-down"></span></a>
-                                        <ul class="nav child_menu">
-                                            <li><a href="{{ url('add-event') }}">Create Event</a></li>
-                                        </ul>
-                                    </li>
-                                    <li><a><i class="fa fa-table"></i> Events <span
-                                                class="fa fa-chevron-down"></span></a>
-                                        <ul class="nav child_menu">
-                                            <li><a href="{{ url('view-events') }}">view events</a></li>
-                                        </ul>
-                                    </li>
-                                </ul>
-                            </div>
-
-                        </div> -->
                         @include('layouts.sidebar')
                         <!-- /sidebar menu -->
 
                     </div>
                 </div>
 
-                <!-- top navigation -->
-                <!-- <div class="top_nav">
-                    <div class="nav_menu">
-                        <div class="nav toggle">
-                            <a id="menu_toggle"><i class="fa fa-bars"></i></a>
-                        </div>
-                        <nav class="nav navbar-nav">
-                            <ul class=" navbar-right">
-                                <li class="nav-item dropdown open" style="padding-left: 15px;">
-                                    <a href="javascript:;" class="user-profile dropdown-toggle" aria-haspopup="true"
-                                        id="navbarDropdown" data-toggle="dropdown" aria-expanded="false">
-                                        <img src="{{ asset('/build/images/img.jpg') }}" alt="">John Doe
-                                    </a>
-                                    <div class="dropdown-menu dropdown-usermenu pull-right"
-                                        aria-labelledby="navbarDropdown">
-                                        <a class="dropdown-item" href="javascript:;"> Profile</a>
-                                        <a class="dropdown-item" href="javascript:;">
-                                            <span class="badge bg-red pull-right">50%</span>
-                                            <span>Settings</span>
-                                        </a>
-                                        <a class="dropdown-item" href="javascript:;">Help</a>
-                                        <a class="dropdown-item" href="{{ route('get.destroy') }}"><i
-                                                class="fa fa-sign-out pull-right"></i> Log Out</a>
-                                    </div>
-                                </li>
-
-
-                            </ul>
-                        </nav>
-                    </div>
-                </div> -->
-                <!-- /top navigation -->
                 @include('layouts.nav')
 
                 <!-- page content -->

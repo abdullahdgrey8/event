@@ -113,7 +113,7 @@ class EventsController extends Controller
             $event_param=$aRow->event_code;
             $id = $aRow->id;
 
-            $qr_url = $aRow->url;
+           // $qr_url = $aRow->url;
             $view_url= $baseUrl . '/candidates/' . $event_param;
 
             $qr_code = '<a class="qr-code open-modal" data="' . $id . '" href="javascript:void(0)"><img src="assets/images/qrcode.png" /></a>
@@ -251,14 +251,13 @@ class EventsController extends Controller
     function eventCandidates(Request $request){
         $candidateId = $request->route('id');
         $candidates = Candidates::where('event_id', $candidateId)->get();
-    
         // Check if any candidates were found
         if ($candidates->isEmpty()) {
-            return response()->json(['message' => 'No candidates found for the specified event ID.'], 404);
-        }
-    
+            return view('noCandidateView');
+            // return response()->json(['message' => 'No candidates found for the specified event ID.'], 404);
+        }    
         return view('viewCandidates', ['candidates' => $candidates]);
+        //noCandidateView.blade.php
 
-     
     }
 }

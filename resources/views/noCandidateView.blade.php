@@ -1,7 +1,7 @@
+
 @include('components.Head')
 
 <body>
-
     <x-navbar />
     <!-- New Content -->
     <div class="nav-md">
@@ -30,13 +30,13 @@
 
                         <br />
 
+                       
                         @include('layouts.sidebar')
-                        <!-- /sidebar menu -->
+
 
                     </div>
                 </div>
 
-               
                 @include('layouts.nav')
                 <!-- /top navigation -->
 
@@ -44,7 +44,7 @@
                 <div class="right_col" role="main">
                     <div class="">
                         <div class="page-title">
-                            
+                          
                         </div>
 
                         <div class="clearfix"></div>
@@ -60,35 +60,14 @@
                                        
 <!-- viewCandidates.blade.php -->
 
-<div class="candidate-container">
-  <h1 class="candidate-title">Candidate List</h1>
-  @if (!empty($candidates))
-    <table class="candidate-table">
-      <thead>
-        <tr>
-          <th>Name</th>
-          <th>Email</th>
-          <th>Category</th>
-          <th>Uploaded File</th>
-          <th>Date and Time</th>
-        </tr>
-      </thead>
-      <tbody>
-        @foreach ($candidates as $candidate)
-          <tr>
-            <td>{{ $candidate->first_name }} {{ $candidate->last_name }}</td>
-            <td>{{ $candidate->email }}</td>
-            <td>{{ $candidate->category }}</td>
-            <td>{{ $candidate->resume }}</td>
-            <td>{{ $candidate->created_at }}</td>
-          </tr>
-        @endforeach
-      </tbody>
-    </table>
-  @else
-    <p class="no-candidates">No candidates found for the specified event ID.</p>
-  @endif
-</div>
+<!-- <div class="container"> -->
+  <div class="text-center">
+
+    <h1>No Candidates Found</h1>
+    <p>We're sorry, but no candidates were found for this event.</p>
+  </div>
+  <!-- <a href="#" class="button">Go Back</a>
+</div> -->
 
 
                                     </div>
@@ -103,15 +82,10 @@
         <div class="modal" tabindex="-1" role="dialog" id="modal-container">
             <div class="modal-dialog" role="document">
                 <div class="modal-content">
-                    <div class="modal-header">
-
-                    </div>
                     <div class="modal-body" id="qrcode_data">
                         <p>Modal body text goes here.</p>
                     </div>
-                    <div class="modal-footer">
 
-                    </div>
                 </div>
             </div>
         </div>
@@ -202,48 +176,6 @@
     });
     </script>
     <style>
-        .candidate-container {
-    max-width: 80vw;
-    margin: 50px auto;
-    padding: 20px;
-    background-color: #fff;
-    border-radius: 8px;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-  }
-
-  .candidate-title {
-    font-family: "Helvetica Neue", Roboto, Arial, "Droid Sans", sans-serif;
-    text-align: center;
-    color: #333;
-  }
-
-  .candidate-table {
-    width: 100%;
-    border-collapse: collapse;
-    margin-top: 20px;
-  }
-
-  .candidate-table th, .candidate-table td {
-    padding: 22px 79px;
-    text-align: left;
-    border-bottom: 1px solid #ddd;
-  }
-
-  .candidate-table th {
-    background-color: #2A3F54;
-    color: #fff;
-  }
-
-  .candidate-table tbody tr:nth-child(even) {
-    background-color: #f2f2f2;
-  }
-
-  .no-candidates {
-    text-align: center;
-    color: #666;
-    margin-top: 20px;
-  }
-
     .edit-action {
         display: flex;
         justify-content: center;
@@ -345,3 +277,5 @@
 </body>
 
 </html>
+
+
