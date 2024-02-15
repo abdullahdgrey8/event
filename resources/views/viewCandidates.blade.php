@@ -155,97 +155,37 @@
                                         <div class="clearfix"></div>
                                     </div>
                                     <div class="x_content">
-                                        <div class="row">
-                                            <div class="col-sm-12">
-                                                <div class="card-box table-responsive">
-                                                    <!-- <p class="text-muted font-13 m-b-30">
-                                                        The Buttons extension for DataTables provides a common set of
-                                                        options, API methods and styling
-                                                        to display buttons on a page that will interact with a
-                                                        DataTable. The core library provides
-                                                        the based framework upon which plug-ins can built.
-                                                    </p> -->
-                                                    <div style="display:flex; justify-content:space-between;">
-                                                        <div style="display:flex;gap:10px; ">
-                                                            <div>
-                                                                <label for="event_code">Event Code:</label><br>
-                                                                <input type="text" id="event_code" name="event_code"
-                                                                    class="form-control">
-                                                            </div>
-                                                            <div>
+                                       
+<!-- viewCandidates.blade.php -->
 
-                                                                <label for="event_name">Event Name:</label><br>
-                                                                <input type="text" id="event_name" name="event_name"
-                                                                    class="form-control">
-                                                            </div>
-
-                                                            <div>
-
-                                                                <label for="start_date">Start Date:</label><br>
-                                                                <input type="date" id="start_date" name="start_date"
-                                                                    class="form-control">
-                                                            </div>
-                                                            <div>
+@if (!empty($candidates))
+    <table>
+        <thead>
+            <tr>
+                <th>Name</th>
+                <th>Email</th>
+                <th>Category</th>
+                <th>Uploaded File</th>
+                <th>Date and Time</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach ($candidates as $candidate)
+                <tr>
+                    <td>{{ $candidate->first_name }} {{ $candidate->last_name }}</td>
+                    <td>{{ $candidate->email }}</td>
+                    <td>{{ $candidate->category }}</td>
+                    <td>{{ $candidate->resume }}</td>
+                    <td>{{ $candidate->created_at }}</td>
+                </tr>
+            @endforeach
+        </tbody>
+    </table>
+@else
+    <p>No candidates found for the specified event ID.</p>
+@endif
 
 
-                                                                <label for="end_date">End Date:</label><br>
-                                                                <input type="date" id="end_date" name="end_date"
-                                                                    class="form-control">
-                                                            </div>
-                                                            <div>
-
-                                                                <label for="status">Status:</label><br>
-                                                                <select name="status" id="status" class="form-control">
-                                                                    <option value="">Select Status</option>
-                                                                    <option value="1">Active</option>
-                                                                    <option value="0">inactive</option>
-                                                                </select>
-                                                            </div>
-
-                                                            <div style="margin-top: 25px;">
-                                                                <a href=""></a>
-                                                                <button id="apply_filters"
-                                                                    class="btn btn-secondary">Apply</button>
-                                                            </div>
-                                                        </div>
-
-                                                        <div style="margin-top: 25px;">
-                                                            <?php
-                                                            $baseUrl = url('/');
-                                                            echo '<a id="apply_filters" class="btn btn-primary" href="'.$baseUrl.'/add-event'.'">Add New
-                                                            Event</a>'
-                                                            ?>
-                                                            <!-- <button style="margin-right: 15px;" class="btn btn-primary"
-                                                                id="apply_filters">Add New
-                                                                Event</button> -->
-                                                        </div>
-                                                    </div>
-                                                    <table id="event_table" class="table table-striped table-bordered"
-                                                        style="width:100%">
-                                                        <thead>
-                                                            <tr>
-                                                                <th>Sr. No.</th>
-                                                                <th>Event Code</th>
-                                                                <th>Event Name</th>
-                                                                <th>Description</th>
-                                                                <th>Start date</th>
-                                                                <th>End Date</th>
-                                                                <th>Status</th>
-                                                                <th>QR-Code</th>
-                                                                <th>URL</th>
-                                                                <th>Actions</th>
-                                                            </tr>
-                                                        </thead>
-
-
-                                                        <tbody>
-
-
-                                                        </tbody>
-                                                    </table>
-                                                </div>
-                                            </div>
-                                        </div>
                                     </div>
                                 </div>
                             </div>

@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use DB;
 use Auth;
 use App\Models\Events;
+use App\Models\Candidates;
 // use Baconslug\Encoder\slug;
 
 class EventsController extends Controller
@@ -109,8 +110,10 @@ class EventsController extends Controller
 
         $url = config('app.forntend_url');
         foreach ($salesData as $aRow) {
+            $event_param=$aRow->event_code;
             $id = $aRow->id;
             $qr_url = $aRow->url;
+            $view_url= $baseUrl . '/candidates/' . $event_param;
             $qr_code = '<a class="qr-code open-modal" data="' . $id . '" href="javascript:void(0)"><img src="assets/images/qrcode.png" /></a>
             
 ';
@@ -119,7 +122,9 @@ class EventsController extends Controller
 
             $sOptions = '<div class="edit-action">
     <div class="icon">
-        <i class="fa-regular fa-eye"></i>
+    <a href="' . $view_url . '">
+    <i class="fa-regular fa-eye"></i>
+    </a>
     </div>
     <div class="icon">
         <a href="' . $editLink . '"><i class="fa-solid fa-pencil"></i></a>
@@ -243,7 +248,15 @@ class EventsController extends Controller
     }
     function eventCandidates(Request $request){
         $candidateId = $request->route('id');
-print_r($candidateId);
-exit;
+        $candidates = Candidates::where('event_id', $candidateId)->get();
+    
+        // Check if any candidates were found
+        if ($candidates->isEmpty()) {
+            return response()->json(['message' => 'No candidates found for the specified event ID.'], 404);
+        }
+    
+        return view('viewCandidates', ['candidates' => $candidates]);
+
+     
     }
 }
