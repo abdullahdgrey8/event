@@ -2,7 +2,11 @@
 
 use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
+
 use App\Http\Controllers\EventsController;
+use App\Http\Controllers\QrCodeController;
+
+
 
 /*
 |--------------------------------------------------------------------------
@@ -16,14 +20,15 @@ use App\Http\Controllers\EventsController;
 */
 
 Route::get('/', function () {
-    return view('welcome');
+   /// return view('welcome');
+   return redirect('/login');
 });
 Route::get('/form', function () {
     return view("form");
 });
-Route::get('/eventform', function () {
-    return view("createevent");
-});
+
+
+
 
 Route::get('/dashboard', function () {
     return view('dashboard');
@@ -33,8 +38,19 @@ Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
-    Route::get('/view-events', [EventsController::class, 'viewEvents'])->name('view.events');
+
+    //qr code library 
+    Route::get('/qrcode', [QrCodeController::class, 'index']);
+
+    Route::post('/event-save', [EventsController::class, 'store'])->name('event.store');
+    Route::get('/add-event/{id?}', [EventsController::class, 'addEvent'])->name('event.add');
+    //Route::get('/events/first/edit', [EventController::class, 'editFirst'])->name('events.edit');
     Route::get('/get-all-events', [EventsController::class, 'getAllEvents'])->name('get.all.events');
+    Route::get('/view-events', [EventsController::class, 'viewEvents'])->name('viewEvents');
+    Route::get('/candidates/{id?}', [EventsController::class, 'eventCandidates'])->name('event.candidates');
+    Route::post('/generate-qr-code', [EventsController::class, 'generateQRCode'])->name('generate.qr.code');
+    Route::get('/logout', [ProfileController::class, 'destroy'])->name('get.destroy');
 });
+
 
 require __DIR__.'/auth.php';
