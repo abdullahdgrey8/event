@@ -275,7 +275,99 @@ class EventsController extends Controller
         }
         
     }
-    public function getAllCandidates(Request $request)
+     public function getAllCandidates(Request $request)
+    {
+
+        $event_id = $request->input('event_id');
+        /*echo '<pre>';
+        print_r($request->all());
+        exit;
+        */
+        $aColumns = ['candidates.name','candidates.email', 'categories.name','candidates.resume','candidates.created_at'];
+        $result = DB::table('candidates')->join('categories','candidates.category_id','categories.id')->where('candidates.event_id',$event_id)
+            ->select(['candidates.id','candidates.name', 'categories.name as category_name','candidates.email','candidates.resume','candidates.created_at']);
+
+        
+        $iStart = $request->get('iDisplayStart');
+        $iPageSize = $request->get('iDisplayLength');
+        // $sOrder='';
+        if ($request->get('iSortCol_0') != null) { //iSortingCols
+            $sOrder = "ORDER BY  ";
+
+            for ($i = 0; $i < intval($request->get('iSortingCols')); $i++) {
+                if ($request->get('bSortable_' . intval($request->get('iSortCol_' . $i))) == "true") {
+                    $sOrder .= $aColumns[intval($request->get('iSortCol_' . $i))] . " " . $request->get('sSortDir_' . $i) . ", ";
+                }
+            }
+
+            $sOrder = substr_replace($sOrder, "", -2);
+            if ($sOrder == "ORDER BY") {
+                $sOrder = " id ASC";
+            }
+        }
+        //echo $sOrder; 
+        $OrderArray = explode(' ', $sOrder);
+
+
+        $sKeywords = $request->get('sSearch');
+        if ($sKeywords != "") {
+            //$aColumns = ['sales.id', 'sales.created_at', 'sales.reference_no', 'couriers.name', 'customers.name','sales.sale_status','sales.payment_status','deliveries.status','sales.grand_total'];
+            $result->Where(function ($query) use ($sKeywords) {
+                $query->orWhere('candidates.id', 'LIKE', "%{$sKeywords}%")->orWhere('candidates.name', 'LIKE', "%{$sKeywords}%")
+                    ->orWhere('candidates.email', 'LIKE', "%{$sKeywords}%"); //billers.name
+            });
+        }
+
+        for ($i = 0; $i < count($aColumns); $i++) {
+            $request->get('sSearch_' . $i);
+            if ($request->get('bSearchable_' . $i) == "true" && $request->get('sSearch_' . $i) != '') {
+                $result->orWhere($aColumns[$i], 'LIKE', "%" . $request->orWhere('sSearch_' . $i) . "%");
+            }
+        }
+
+
+        $iFilteredTotal = $result->count();
+        $iTotal = $iFilteredTotal;
+        if ($iStart != null && $iPageSize != '-1') {
+            $result->skip($iStart)->take($iPageSize);
+        }
+
+        $order = trim($OrderArray[3]);
+        $sort = trim($OrderArray[4]);
+
+
+        $result->orderBy($order, trim($sort));
+        //$result->orderBy("id", "DESC");
+        $salesData = $result->get();
+
+        $output = array(
+            "sEcho" => intval($request->get('sEcho')),
+            "iTotalRecords" => $iTotal,
+            "iTotalDisplayRecords" => $iFilteredTotal,
+            "aaData" => array()
+        );
+        
+        foreach ($salesData as $aRow) {
+            $id = $aRow->id;
+
+
+
+            $created_at = date("M j, Y, g:i a", strtotime($aRow->created_at));
+            
+            $output['aaData'][] = array(                
+                @utf8_encode($aRow->name),
+                @utf8_encode($aRow->email),
+                @utf8_encode($aRow->category_name),
+                @utf8_encode($aRow->resume),
+                @utf8_encode($created_at)
+            );
+            /// $i++;
+        }
+
+        echo json_encode($output);
+    }
+    
+    public function getAllCandidates2(Request $request)
     {
 
       
@@ -285,7 +377,10 @@ class EventsController extends Controller
         exit;
         */
         $aColumns = ['candidates.id','candidates.name','candidates.email', 'categories.name','candidates.resume','candidates.created_at'];
-        $result= DB::table('candidates')->join('categories', 'candidates.category_id','=','categories.id')->where('candidates.event_id',$event_id)->select('candidates.id','candidates.name','candidates.email', 'categories.name as category_name','candidates.resume','candidates.created_at');
+        $result= DB::table('candidates')
+                ->join('categories', 'candidates.category_id','categories.id')
+                ->where('candidates.event_id',$event_id)
+                ->select('candidates.id','candidates.name','candidates.email', 'categories.name as category_name','candidates.resume','candidates.created_at');
         
         $iStart = $request->get('iDisplayStart');
         $iPageSize = $request->get('iDisplayLength');
@@ -349,17 +444,16 @@ class EventsController extends Controller
         // exit;
         
         foreach ($salesData as $aRow) {
-           // $id = $aRow->id;
-            $created_at = date("M j, Y, g:i a", strtotime($aRow->created_at));            
-            $output['aaData'][] = array(               
+             $id = $aRow->id;
+             $created_at = date("M j, Y, g:i a", strtotime($aRow->created_at));            
+             $output['aaData'][] = array(                
+                //$id,
                 @utf8_encode($aRow->name),
                 @utf8_encode($aRow->email),
                 @utf8_encode($aRow->category_name),
                 @utf8_encode($aRow->resume),
                 @utf8_encode($created_at)
             );
-            /// $i++;
-        
         echo json_encode($output);
     }
 }

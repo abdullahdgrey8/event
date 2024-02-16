@@ -54,76 +54,22 @@
                             <div class="col-md-12 col-sm-12 ">
                                 <div class="x_panel">
                                     <div class="x_title">
-                                        {{ $event_row->event_name }} candidates
+
                                         <div class="clearfix"></div>
-                                        <input type="hidden" name="event_id" id="event_id" value="{{ $event_row->id }}" />
                                     </div>
                                     <div class="x_content">
                                         <div class="row">
                                             <div class="col-sm-12">
-                                                <div class="card-box table-responsive">
-<!-- 
-                                                    <div style="display:flex; justify-content:space-between;">
-                                                        <div style="display:flex;gap:10px; ">
-                                                            <div>
-                                                                <label for="event_code">Event Code:</label><br>
-                                                                <input type="text" id="event_code" name="event_code"
-                                                                    class="form-control">
-                                                            </div>
-                                                            <div>
-
-                                                                <label for="event_name">Event Name:</label><br>
-                                                                <input type="text" id="event_name" name="event_name"
-                                                                    class="form-control">
-                                                            </div>
-
-                                                            <div>
-
-                                                                <label for="start_date">Start Date:</label><br>
-                                                                <input type="date" id="start_date" name="start_date"
-                                                                    class="form-control">
-                                                            </div>
-                                                            <div>
-
-
-                                                                <label for="end_date">End Date:</label><br>
-                                                                <input type="date" id="end_date" name="end_date"
-                                                                    class="form-control">
-                                                            </div>
-                                                            <div>
-
-                                                                <label for="status">Status:</label><br>
-                                                                <select name="status" id="status" class="form-control">
-                                                                    <option value="">Select Status</option>
-                                                                    <option value="1">Active</option>
-                                                                    <option value="0">inactive</option>
-                                                                </select>
-                                                            </div>
-
-                                                            <div style="margin-top: 25px;">
-                                                                <a href=""></a>
-                                                                <button id="apply_filters"
-                                                                    class="btn btn-secondary">Apply</button>
-                                                            </div>
-                                                        </div>
-
-                                                        <div style="margin-top: 25px;">
-                                                            <?php
-                                                            $baseUrl = url('/');
-                                                            echo '<a id="apply_filters" class="btn btn-primary" href="'.$baseUrl.'/add-event'.'">Add New
-                                                            Event</a>'
-                                                            ?>
-                                                        </div>
-                                                    </div> -->
-                                                    <table id="candidate_table" class="table table-striped table-bordered"
+                                                <input type="hidden" name="event_id" id="event_id" value="{{ $event_id }}" />
+                                                    <table id="event_table" class="table table-striped table-bordered"
                                                         style="width:100%">
                                                         <thead>
                                                             <tr>                                                                
                                                                 <th>Name</th>
                                                                 <th>Email</th>
                                                                 <th>Category</th>
-                                                                <th>Uploaded File</th>
-                                                                <th>Created at</th>                                                               
+                                                                <th>Uploaded file</th>
+                                                                <th>Date and Time</th>                                                                                                                               
                                                             </tr>
                                                         </thead>
 
@@ -162,32 +108,10 @@
     </div>
     <script>
          var csrfToken = '{{ csrf_token() }}';
-    $(document).ready(function() {
-        $(document).on("click", ".open-modal", function() {
-            var id = $(this).attr("data");
-            
-            //console.warn(id);
-            $.ajax({
-                url: "{{ route('generate.qr.code') }}",
-                type: 'POST',
-                data: {
-                    'event_id': id,
-                    '_token': csrfToken
-                }, // Convert the data to JSON string
-                success: function(response) {
-                    $('#modal-container').modal('show');
-                    $("#qrcode_data").html(response);
-                },
-                error: function(xhr, status, error) {
-                    // Handle errors
-                    console.error('Error:', error);
-                }
-            });
-        });
-    });
+ 
     
     $(document).ready(function() {
-        var table = $('#candidate_table').DataTable({
+        var table = $('#event_table').DataTable({
             "aoColumnDefs": [{
                 "bSortable": false,
                 "aTargets": []
@@ -195,7 +119,7 @@
             "bProcessing": true,
             "bServerSide": true,
             "aaSorting": [
-                [0, "desc"]
+                [4, "desc"]
             ],
             "sPaginationType": "full_numbers",
             "sAjaxSource": "{{ route('get.all.candidates') }}",
@@ -211,9 +135,20 @@
                 aoData.push({
                     "name": "event_id",
                     "value": $("#event_id").val()
-                });               
+                });                
+
             }
         });
+        var objTable = table;
+        /*$("#event_code, #event_name, #start_date, #end_date, #status").change(function() {
+            objTable.draw();
+        });
+        */
+        $("#apply_filters").click(function() {
+            objTable.draw();
+        });
+
+       
     
     });
     </script>
