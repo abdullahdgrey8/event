@@ -158,6 +158,7 @@ class EventsController extends Controller
 
         echo json_encode($output);
     }
+    
 
 
 
@@ -260,4 +261,106 @@ class EventsController extends Controller
         //noCandidateView.blade.php
 
     }
+    public function viewCandidates($event_id)
+    {
+        $test = '';
+
+        $rs = Events::where('id',$event_id);
+        if($rs->count()>0){
+            $event_row = $rs->first();
+            return view('viewCandidates', compact('event_id','event_row'));
+        }else{
+            die("event does not exist");
+            return view('404');
+        }
+        
+    }
+    public function getAllCandidates(Request $request)
+    {
+
+      
+        $event_id = $request->event_id;
+        /*echo '<pre>';
+        print_r($request->all());
+        exit;
+        */
+        $aColumns = ['candidates.id','candidates.name','candidates.email', 'categories.name','candidates.resume','candidates.created_at'];
+        $result= DB::table('candidates')->join('categories', 'candidates.category_id','=','categories.id')->where('candidates.event_id',$event_id)->select('candidates.id','candidates.name','candidates.email', 'categories.name as category_name','candidates.resume','candidates.created_at');
+        
+        $iStart = $request->get('iDisplayStart');
+        $iPageSize = $request->get('iDisplayLength');
+        // $sOrder='';
+        if ($request->get('iSortCol_0') != null) { //iSortingCols
+            $sOrder = "ORDER BY  ";
+
+            for ($i = 0; $i < intval($request->get('iSortingCols')); $i++) {
+                if ($request->get('bSortable_' . intval($request->get('iSortCol_' . $i))) == "true") {
+                    $sOrder .= $aColumns[intval($request->get('iSortCol_' . $i))] . " " . $request->get('sSortDir_' . $i) . ", ";
+                }
+            }
+
+            $sOrder = substr_replace($sOrder, "", -2);
+            if ($sOrder == "ORDER BY") {
+                $sOrder = " id ASC";
+            }
+        }
+        //echo $sOrder; 
+        $OrderArray = explode(' ', $sOrder);
+
+
+        $sKeywords = $request->get('sSearch');
+        if ($sKeywords != "") {
+            ///$aColumns = ['candidates.id','candidates.name','candidates.email', 'categories.name','candidates.resume','candidates.created_at'];
+            $result->Where(function ($query) use ($sKeywords) {
+                $query->orWhere('candidates.id', 'LIKE', "%{$sKeywords}%")->orWhere('candidates.name', 'LIKE', "%{$sKeywords}%")
+                    ->orWhere('andidates.email', 'LIKE', "%{$sKeywords}%")->orWhere('categories.name', 'LIKE', "%{$sKeywords}%"); //billers.name
+            });
+        }
+
+        for ($i = 0; $i < count($aColumns); $i++) {
+            $request->get('sSearch_' . $i);
+            if ($request->get('bSearchable_' . $i) == "true" && $request->get('sSearch_' . $i) != '') {
+                $result->orWhere($aColumns[$i], 'LIKE', "%" . $request->orWhere('sSearch_' . $i) . "%");
+            }
+        }
+
+
+        $iFilteredTotal = $result->count();
+        $iTotal = $iFilteredTotal;
+        if ($iStart != null && $iPageSize != '-1') {
+            $result->skip($iStart)->take($iPageSize);
+        }
+
+        $order = trim($OrderArray[3]);
+        $sort = trim($OrderArray[4]);
+
+
+        $result->orderBy($order, trim($sort));
+        $salesData = $result->get();
+
+        $output = array(
+            "sEcho" => intval($request->get('sEcho')),
+            "iTotalRecords" => $iTotal,
+            "iTotalDisplayRecords" => $iFilteredTotal,
+            "aaData" => array()
+        );
+        // echo '<pre>';
+        // print_r($salesData);
+        // exit;
+        
+        foreach ($salesData as $aRow) {
+           // $id = $aRow->id;
+            $created_at = date("M j, Y, g:i a", strtotime($aRow->created_at));            
+            $output['aaData'][] = array(               
+                @utf8_encode($aRow->name),
+                @utf8_encode($aRow->email),
+                @utf8_encode($aRow->category_name),
+                @utf8_encode($aRow->resume),
+                @utf8_encode($created_at)
+            );
+            /// $i++;
+        
+        echo json_encode($output);
+    }
+}
 }
