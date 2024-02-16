@@ -30,13 +30,14 @@
 
                         <br />
 
+                        
                         @include('layouts.sidebar')
                         <!-- /sidebar menu -->
 
                     </div>
                 </div>
 
-               
+                
                 @include('layouts.nav')
                 <!-- /top navigation -->
 
@@ -44,7 +45,7 @@
                 <div class="right_col" role="main">
                     <div class="">
                         <div class="page-title">
-                            
+                          
                         </div>
 
                         <div class="clearfix"></div>
@@ -53,44 +54,88 @@
                             <div class="col-md-12 col-sm-12 ">
                                 <div class="x_panel">
                                     <div class="x_title">
-                                       
+                                        {{ $event_row->event_name }} candidates
                                         <div class="clearfix"></div>
+                                        <input type="hidden" name="event_id" id="event_id" value="{{ $event_row->id }}" />
                                     </div>
                                     <div class="x_content">
-                                       
-<!-- viewCandidates.blade.php -->
+                                        <div class="row">
+                                            <div class="col-sm-12">
+                                                <div class="card-box table-responsive">
+<!-- 
+                                                    <div style="display:flex; justify-content:space-between;">
+                                                        <div style="display:flex;gap:10px; ">
+                                                            <div>
+                                                                <label for="event_code">Event Code:</label><br>
+                                                                <input type="text" id="event_code" name="event_code"
+                                                                    class="form-control">
+                                                            </div>
+                                                            <div>
 
-<div class="candidate-container">
-  <h1 class="candidate-title">Candidate List</h1>
-  @if (!empty($candidates))
-    <table class="candidate-table">
-      <thead>
-        <tr>
-          <th>Name</th>
-          <th>Email</th>
-          <th>Category</th>
-          <th>Uploaded File</th>
-          <th>Date and Time</th>
-        </tr>
-      </thead>
-      <tbody>
-        @foreach ($candidates as $candidate)
-          <tr>
-            <td>{{ $candidate->first_name }} {{ $candidate->last_name }}</td>
-            <td>{{ $candidate->email }}</td>
-            <td>{{ $candidate->category }}</td>
-            <td>{{ $candidate->resume }}</td>
-            <td>{{ $candidate->created_at }}</td>
-          </tr>
-        @endforeach
-      </tbody>
-    </table>
-  @else
-    <p class="no-candidates">No candidates found for the specified event ID.</p>
-  @endif
-</div>
+                                                                <label for="event_name">Event Name:</label><br>
+                                                                <input type="text" id="event_name" name="event_name"
+                                                                    class="form-control">
+                                                            </div>
+
+                                                            <div>
+
+                                                                <label for="start_date">Start Date:</label><br>
+                                                                <input type="date" id="start_date" name="start_date"
+                                                                    class="form-control">
+                                                            </div>
+                                                            <div>
 
 
+                                                                <label for="end_date">End Date:</label><br>
+                                                                <input type="date" id="end_date" name="end_date"
+                                                                    class="form-control">
+                                                            </div>
+                                                            <div>
+
+                                                                <label for="status">Status:</label><br>
+                                                                <select name="status" id="status" class="form-control">
+                                                                    <option value="">Select Status</option>
+                                                                    <option value="1">Active</option>
+                                                                    <option value="0">inactive</option>
+                                                                </select>
+                                                            </div>
+
+                                                            <div style="margin-top: 25px;">
+                                                                <a href=""></a>
+                                                                <button id="apply_filters"
+                                                                    class="btn btn-secondary">Apply</button>
+                                                            </div>
+                                                        </div>
+
+                                                        <div style="margin-top: 25px;">
+                                                            <?php
+                                                            $baseUrl = url('/');
+                                                            echo '<a id="apply_filters" class="btn btn-primary" href="'.$baseUrl.'/add-event'.'">Add New
+                                                            Event</a>'
+                                                            ?>
+                                                        </div>
+                                                    </div> -->
+                                                    <table id="candidate_table" class="table table-striped table-bordered"
+                                                        style="width:100%">
+                                                        <thead>
+                                                            <tr>                                                                
+                                                                <th>Name</th>
+                                                                <th>Email</th>
+                                                                <th>Category</th>
+                                                                <th>Uploaded File</th>
+                                                                <th>Created at</th>                                                               
+                                                            </tr>
+                                                        </thead>
+
+
+                                                        <tbody>
+
+
+                                                        </tbody>
+                                                    </table>
+                                                </div>
+                                            </div>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
@@ -104,13 +149,11 @@
             <div class="modal-dialog" role="document">
                 <div class="modal-content">
                     <div class="modal-header">
-
                     </div>
                     <div class="modal-body" id="qrcode_data">
                         <p>Modal body text goes here.</p>
                     </div>
                     <div class="modal-footer">
-
                     </div>
                 </div>
             </div>
@@ -144,18 +187,18 @@
     });
     
     $(document).ready(function() {
-        var table = $('#event_table').DataTable({
+        var table = $('#candidate_table').DataTable({
             "aoColumnDefs": [{
                 "bSortable": false,
-                "aTargets": [0, 7, 8, 9]
+                "aTargets": []
             }],
             "bProcessing": true,
             "bServerSide": true,
             "aaSorting": [
-                [4, "desc"]
+                [0, "desc"]
             ],
             "sPaginationType": "full_numbers",
-            "sAjaxSource": "{{ route('get.all.events') }}",
+            "sAjaxSource": "{{ route('get.all.candidates') }}",
             "language": {
                 "infoFiltered": "",
                 "processing": "Loading. Please wait..."
@@ -166,84 +209,15 @@
             ],
             "fnServerParams": function(aoData) {
                 aoData.push({
-                    "name": "event_code",
-                    "value": $("#event_code").val()
-                });
-                aoData.push({
-                    "name": "event_name",
-                    "value": $("#event_name").val()
-                });
-                aoData.push({
-                    "name": "start_date",
-                    "value": $("#start_date").val()
-                });
-                aoData.push({
-                    "name": "end_date",
-                    "value": $("#end_date").val()
-                });
-                aoData.push({
-                    "name": "status",
-                    "value": $("#status").val()
-                });
-
+                    "name": "event_id",
+                    "value": $("#event_id").val()
+                });               
             }
         });
-        var objTable = table;
-        /*$("#event_code, #event_name, #start_date, #end_date, #status").change(function() {
-            objTable.draw();
-        });
-        */
-        $("#apply_filters").click(function() {
-            objTable.draw();
-        });
-
-       
     
     });
     </script>
     <style>
-        .candidate-container {
-    max-width: 80vw;
-    margin: 50px auto;
-    padding: 20px;
-    background-color: #fff;
-    border-radius: 8px;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-  }
-
-  .candidate-title {
-    font-family: "Helvetica Neue", Roboto, Arial, "Droid Sans", sans-serif;
-    text-align: center;
-    color: #333;
-  }
-
-  .candidate-table {
-    width: 100%;
-    border-collapse: collapse;
-    margin-top: 20px;
-  }
-
-  .candidate-table th, .candidate-table td {
-    padding: 22px 79px;
-    text-align: left;
-    border-bottom: 1px solid #ddd;
-  }
-
-  .candidate-table th {
-    background-color: #2A3F54;
-    color: #fff;
-  }
-
-  .candidate-table tbody tr:nth-child(even) {
-    background-color: #f2f2f2;
-  }
-
-  .no-candidates {
-    text-align: center;
-    color: #666;
-    margin-top: 20px;
-  }
-
     .edit-action {
         display: flex;
         justify-content: center;
