@@ -114,7 +114,7 @@ class EventsController extends Controller
             $id = $aRow->id;
 
            // $qr_url = $aRow->url;
-            $view_url= $baseUrl . '/candidates/' . $event_param;
+            $view_url= route("viewCandidates",['event_id'=>$id]); //$baseUrl . '/candidates/' . $event_param;
 
             $qr_code = '<a class="qr-code open-modal" data="' . $id . '" href="javascript:void(0)"><img src="assets/images/qrcode.png" /></a>
             
@@ -264,7 +264,7 @@ class EventsController extends Controller
     public function viewCandidates($event_id)
     {
         $test = '';
-
+        
         $rs = Events::where('id',$event_id);
         if($rs->count()>0){
             $event_row = $rs->first();
