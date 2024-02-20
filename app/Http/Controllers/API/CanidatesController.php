@@ -10,6 +10,7 @@ use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Facades\File;
 use App\Models\Categories;
 use App\Models\Events;
+use App\Models\Candidates;
 
 class CanidatesController extends BaseController {
 
