@@ -114,7 +114,7 @@ class EventsController extends Controller
             $id = $aRow->id;
 
            // $qr_url = $aRow->url;
-            $view_url= $baseUrl . '/view-candidates/' . $event_param;
+            $view_url= route("viewCandidates",['event_id'=>$id]); //$baseUrl . '/candidates/' . $event_param;
 
             $qr_code = '<a class="qr-code open-modal" data="' . $id . '" href="javascript:void(0)"><img src="assets/images/qrcode.png" /></a>
             
@@ -264,7 +264,7 @@ class EventsController extends Controller
     public function viewCandidates($event_id)
     {
         $test = '';
-
+        
         $rs = Events::where('id',$event_id);
         if($rs->count()>0){
             $event_row = $rs->first();
@@ -350,15 +350,16 @@ class EventsController extends Controller
         foreach ($salesData as $aRow) {
             $id = $aRow->id;
 
-
-
+            // $route = route('downloadResume',['id'=> $id]);
+            $route= route("downloadResume",['id'=>$id]);
+            $resume = '<a target="_blank" href="'.$route.'">Download Resume</a>';
             $created_at = date("M j, Y, g:i a", strtotime($aRow->created_at));
             
             $output['aaData'][] = array(                
                 @utf8_encode($aRow->name),
                 @utf8_encode($aRow->email),
                 @utf8_encode($aRow->category_name),
-                @utf8_encode($aRow->resume),
+                @utf8_encode($resume),
                 @utf8_encode($created_at)
             );
             /// $i++;
@@ -367,6 +368,44 @@ class EventsController extends Controller
         echo json_encode($output);
     }
     
+
+    public function downloadResume($id)
+    {
+        // Fetch the candidate by ID
+      
+        $result= DB::table('candidates')->where('id', $id);
+        if ($result->count() > 0) {
+
+           $row = Candidates::findOrFail($id);
+           $path = config('app.resumes') . $row->event_id;
+           $file_name = $row->resume;
+           $file = $path .'/'. $file_name; 
+        //    $file = '/path/to/your/file.pdf';
+
+// Check if the file exists
+if (file_exists($file)) {
+    // Set headers to force download
+    header('Content-Description: File Transfer');
+    header('Content-Type: application/octet-stream');
+    header('Content-Disposition: attachment; filename="' . basename($file) . '"');
+    header('Content-Transfer-Encoding: binary');
+    header('Expires: 0');
+    header('Cache-Control: must-revalidate');
+    header('Pragma: public');
+    header('Content-Length: ' . filesize($file));
+    // Output the file
+    readfile($file);
+    exit;
+} else {
+    // File not found
+    die('File not found.');
+}
+        }else{
+            view('404');
+        }
+    }
+
+
     public function getAllCandidates2(Request $request)
     {
 

@@ -23,9 +23,11 @@ Route::get('/', function () {
    /// return view('welcome');
    return redirect('/login');
 });
-Route::get('/form', function () {
-    return view("form");
-});
+// Route::get('/Asfar', function () {
+//     return view("Asfar");
+// });
+
+
 
 
 
@@ -48,10 +50,11 @@ Route::middleware('auth')->group(function () {
     Route::get('/get-all-events', [EventsController::class, 'getAllEvents'])->name('get.all.events');
     Route::get('/view-events', [EventsController::class, 'viewEvents'])->name('viewEvents');
     Route::get('/get-all-candidates', [EventsController::class, 'getAllCandidates'])->name('get.all.candidates');
-    Route::get('/view-candidates/{event_id?}', [EventsController::class, 'viewCandidates'])->name('viewCandidates');
+    Route::get('/view-candidates/{event_id}', [EventsController::class, 'viewCandidates'])->name('viewCandidates');
     Route::get('/candidates/{id?}', [EventsController::class, 'eventCandidates'])->name('event.candidates');
     Route::post('/generate-qr-code', [EventsController::class, 'generateQRCode'])->name('generate.qr.code');
     Route::get('/logout', [ProfileController::class, 'destroy'])->name('get.destroy');
+    Route::get('/download-resume/{id}', [EventsController::class, 'downloadResume'])->name('downloadResume');
 });
 
 
