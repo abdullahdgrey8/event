@@ -61,7 +61,10 @@
                                         <div class="row">
                                             <div class="col-sm-12">
                                                 <input type="hidden" name="event_id" id="event_id" value="{{ $event_id }}" />
-                                                    <table id="event_table" class="table table-striped table-bordered"
+                                                <!-- table-striped -->
+                                                <button id="downloadListButton">Export to Excel</button>
+
+                                                    <table id="event_table" class="candidate-table table  table-bordered"
                                                         style="width:100%">
                                                         <thead>
                                                             <tr>                                                                
@@ -106,6 +109,8 @@
         </div>
         @include('components.Scripts')
     </div>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.17.4/xlsx.full.min.js"></script>
+
     <script>
          var csrfToken = '{{ csrf_token() }}';
  
@@ -151,104 +156,68 @@
        
     
     });
+    document.getElementById('downloadListButton').addEventListener('click', function() {
+    // Get candidate table data
+    var table = document.getElementById('event_table');
+    var rows = table.querySelectorAll('tr');
+    var data = [];
+    for (var i = 0; i < rows.length; i++) {
+      var cols = rows[i].querySelectorAll('td, th');
+      var rowData = [];
+      for (var j = 0; j < cols.length; j++) {
+        rowData.push(cols[j].innerText);
+      }
+      data.push(rowData);
+    }
+    // Create Excel workbook
+    var wb = XLSX.utils.book_new();
+    var ws = XLSX.utils.aoa_to_sheet(data);
+    
+    // Apply some basic styling to the Excel sheet
+    var wscols = [
+      { wch: 20 }, // Width of the columns
+      { wch: 25 },
+      { wch: 15 },
+      { wch: 40 },
+      { wch: 20 }
+    ];
+    ws['!cols'] = wscols;
+    
+    var wsrows = [
+      { hpt: 20 }, // Height of the rows
+      { hpt: 20 },
+      { hpt: 20 },
+      { hpt: 20 },
+      { hpt: 20 }
+    ];
+    ws['!rows'] = wsrows;
+    
+    // Save Excel file
+    XLSX.utils.book_append_sheet(wb, ws, 'CandidateList');
+    XLSX.writeFile(wb, 'CandidateList.xlsx');
+  });
     </script>
     <style>
-    .edit-action {
-        display: flex;
-        justify-content: center;
-        gap: 10px;
-        font-size: 20px;
-    }
-
-    .qr-code {
-        display: flex;
-        justify-content: center;
-        align-items: center;
-    }
-
-    .qr-code img {
-        width: 50px;
-        min-height: 50px;
-    }
-
-    .img-replace {
-        display: inline-block;
-        overflow: hidden;
-        text-indent: 100%;
-        color: transparent;
-        white-space: nowrap;
-    }
-
-    body,
-    html {
-        height: 100%;
-        margin: 0;
-    }
-
-    .qr-code {
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        /* margin-top: 50px; */
-    }
-
-    .qr-code img {
-        width: 50px;
-    }
-
-    .qr-code.open-modal {
-        /* Customize appearance as needed (e.g., cursor, display) */
-        cursor: pointer;
-        display: inline-block;
-    }
-
-    /* Styles for the hidden modal container */
-    #modal-container {
-        display: none;
-        /* Initially hidden */
-        position: fixed;
-        top: 0;
-        left: 0;
-        width: 100%;
-        height: 100vh;
-        background-color: rgba(0, 0, 0, 0.4);
-        /* Semi-transparent background */
-        z-index: 999;
-        /* Ensure modal is on top of other elements */
-    }
-
-    /* Styles for the modal window */
-    .modal {
-        position: absolute;
-        /* top: 50%;
-        left: 50%; */
-        /* transform: translate(-50%, -50%); */
-        background-color: white;
-        z-index: 9999 !important;
-        /* Customize background color */
-        padding: 20px;
-        border: 1px solid #ccc;
-        border-radius: 5px;
-        /* Add rounded corners for a smoother look */
-        box-shadow: 0 2px 5px rgba(0, 0, 0, 0.3);
-        /* Create depth and shadow */
-    }
-
-    /* Styles for the modal close button */
-    .modal-close {
-        position: absolute;
-        top: 10px;
-        right: 10px;
-        padding: 5px 10px;
-        border: none;
-        background-color: red;
-        /* Customize color */
-        color: white;
-        font-size: 16px;
-        cursor: pointer;
-        border-radius: 3px;
-        /* Add rounded corners for the button */
-    }
+        .row{
+            position: relative;
+        }
+    #downloadListButton{
+    position: absolute;
+    right: 315px;
+    top: 7px;
+    /* background-color: #2A3F52; */
+    border: none;
+    color: #2a3f54;
+    padding: 1px 13px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 16px;
+    margin-top: 0px;
+    cursor: pointer;
+    border-radius: 8px;
+    z-index: 9999;
+  }
     </style>
 
 </body>
