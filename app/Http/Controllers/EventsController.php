@@ -110,7 +110,7 @@ class EventsController extends Controller
 
         $url = config('app.forntend_url');
         foreach ($salesData as $aRow) {
-            $event_param=$aRow->event_code;
+            $event_param=$aRow->id;
             $id = $aRow->id;
 
            // $qr_url = $aRow->url;
