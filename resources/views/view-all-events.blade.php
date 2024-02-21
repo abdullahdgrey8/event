@@ -6,17 +6,17 @@
     <!-- New Content -->
     <div class="nav-md">
         <div class="container body">
-            <div class="main_container">
-                <div class="col-md-3 left_col">
-                    <div class="left_col scroll-view">
-                        <div class="navbar nav_title" style="border: 0;">
+            <!-- <div class="main_container"> -->
+                <!-- <div class="col-md-3 left_col"> -->
+                    <!-- <div class="left_col scroll-view"> -->
+                        <!-- <div class="navbar nav_title" style="border: 0;">
                             <img src="{{ asset('/build/images/ttl.svg') }}" alt="">
-                        </div>
+                        </div> -->
 
-                        <div class="clearfix"></div>
+                        <!-- <div class="clearfix"></div> -->
                         
                         <!-- menu profile quick info -->
-                        <div class="profile clearfix">
+                        <!-- <div class="profile clearfix">
                             <div class="profile_pic">
                                 <img src="{{ asset('/build/images/img.jpg') }}" alt="..."
                                     class="img-circle profile_img">
@@ -25,17 +25,17 @@
                                 <span>Welcome,</span>
                                 <h2>John Doe</h2>
                             </div>
-                        </div>
+                        </div> -->
                         <!-- /menu profile quick info -->
 
-                        <br />
+                        <!-- <br /> -->
 
                         
-                        @include('layouts.sidebar')
+                        <!-- @include('layouts.sidebar') -->
                         <!-- /sidebar menu -->
 
-                    </div>
-                </div>
+                    <!-- </div> -->
+                <!-- </div> -->
 
                 
                 @include('layouts.nav')
@@ -53,10 +53,10 @@
                         <div class="row">
                             <div class="col-md-12 col-sm-12 ">
                                 <div class="x_panel">
-                                    <div class="x_title">
+                                    <!-- <div class="x_title">
 
                                         <div class="clearfix"></div>
-                                    </div>
+                                    </div> -->
                                     <div class="x_content">
                                         <div class="row">
                                             <div class="col-sm-12">
@@ -114,9 +114,9 @@
                                                             ?>
                                                         </div>
                                                     </div>
-                                                    <table id="event_table" class="table table-striped table-bordered"
+                                                    <table id="event_table" class="table table-bordered"
                                                         style="width:100%">
-                                                        <thead>
+                                                        <thead class="bg-[#E4F1FD] head-color">
                                                             <tr>
                                                                 <th>Sr. No.</th>
                                                                 <th>Event Code</th>
@@ -147,7 +147,7 @@
                     </div>
                 </div>
                 <!-- /page content -->
-            </div>
+            <!-- </div> -->
         </div>
         <div class="modal" tabindex="-1" role="dialog" id="modal-container">
             <div class="modal-dialog" role="document">
@@ -249,6 +249,12 @@
     });
     </script>
     <style>
+        .head-color{
+            background-color: #E4F1FD;
+        }
+        #event_table_filter{
+            display: none;
+        }
     .edit-action {
         display: flex;
         justify-content: center;
@@ -344,6 +350,19 @@
         cursor: pointer;
         border-radius: 3px;
         /* Add rounded corners for the button */
+    }
+
+    .dataTables_wrapper .row:first-child,
+    .dataTables_wrapper .row:first-child .col-sm-6  {
+        position: static;
+    }
+
+    #event_table_length {
+        position: absolute;
+        bottom: -17px;
+        z-index: 9999;
+        left: 0;
+        top: auto;
     }
     </style>
 

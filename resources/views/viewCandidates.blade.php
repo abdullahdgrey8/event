@@ -51,7 +51,7 @@
                         <div class="clearfix"></div>
 
                         <div class="row">
-                            <div class="col-md-12 col-sm-12 ">
+                            <div class="col-md-12 col-sm-12 table-top">
                                 <div class="x_panel">
                                     <div class="x_title">
 
@@ -64,9 +64,9 @@
                                                 <!-- table-striped -->
                                                 <button id="downloadListButton">Export to Excel</button>
 
-                                                    <table id="event_table" class="candidate-table table  table-bordered"
+                                                    <table id="event_table" class="candidate-table table "
                                                         style="width:100%">
-                                                        <thead>
+                                                        <thead class="head-color">
                                                             <tr>                                                                
                                                                 <th>Name</th>
                                                                 <th>Email</th>
@@ -198,24 +198,43 @@
   });
     </script>
     <style>
+        .head-color{
+            background-color: #E4F1FD;
+        }
+        #event_table{
+            margin-top: 50px !important;
+        }
+        #event_table_filter{
+            position: absolute;
+            z-index: 9989;
+            right: 1314px;
+        }
+        #event_table_length{
+            position: absolute;
+            top: 206px;
+            z-index: 9999;
+        }
+        #event_table_info{
+            padding-left: 170px;
+        }
         .row{
             position: relative;
         }
     #downloadListButton{
+        background-color: #FF5C00;
+        color: white;
+        font-weight: 600;
+        font-size: medium;
+        border: none;
     position: absolute;
-    right: 315px;
-    top: 7px;
+    right: 21px;
+    /* top: 7px; */
     /* background-color: #2A3F52; */
-    border: none;
-    color: #2a3f54;
-    padding: 1px 13px;
-    text-align: center;
-    text-decoration: none;
-    display: inline-block;
-    font-size: 16px;
-    margin-top: 0px;
-    cursor: pointer;
-    border-radius: 8px;
+    width: 166px;
+height: 44px;
+
+border-radius: 2px;
+
     z-index: 9999;
   }
     </style>
