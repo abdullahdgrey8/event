@@ -4,6 +4,12 @@
 
     <form method="POST" action="{{ route('login') }}">
         @csrf
+        <div class="w-[100%] mb-7">
+            <h1 class="font-bold text-[#081185] text-[40px] line-height-60">Sign In</h1>
+            <p class="text-[16px] pt-5">This is a secure site. Please enter your login information to enter or
+                you can register yourself
+            </p>
+        </div>
 
         <!-- Email Address -->
         <div>
@@ -41,7 +47,7 @@
         </div>
 
         <div class="flex items-center justify-end mt-4">
-            <x-primary-button class="ms-3 w-[100%]">
+            <x-primary-button class=" w-[100%]">
                 {{ __('Log in') }}
             </x-primary-button>
         </div>

@@ -23,12 +23,7 @@
                 <img src="{{ asset('/build/images/ttl_logo.png') }}" alt="">
             </div>
             <div class="flex flex-col sm:justify-center min-h-screen items-center pt-6 sm:pt-0 bg-white">
-                <div class="w-[70%] mx-auto">
-                    <h1 class="font-bold text-[#081185] text-[40px] line-height-60">Sign In</h1>
-                    <p class="text-[16px] pt-5">This is a secure site. Please enter your login information to enter or
-                        you can register yourself
-                    </p>
-                </div>
+
 
                 <div class="w-full sm:max-w-md mt-6 px-6 py-4 bg-white overflow-hidden sm:rounded-lg">
                     {{ $slot }}
