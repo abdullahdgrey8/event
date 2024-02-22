@@ -394,18 +394,7 @@
         top: auto;
     }
 
-    /* #event_table_wrapper .row:first-child,
-    .dataTables_wrapper .row:first-child .col-sm-6  {
-        position: static !important;
-    }
 
-    #event_table_length {
-        position: absolute;
-        bottom: -17px;
-        z-index: 9999;
-        left: 0;
-        top: auto;
-    } */
     </style>
 
 </body>
