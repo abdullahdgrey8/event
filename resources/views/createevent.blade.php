@@ -2,6 +2,7 @@
 
 <x-navbar />
 <link rel="stylesheet" href="//code.jquery.com/ui/1.13.2/themes/base/jquery-ui.css">
+
 <body class="nav-md">
     <div class="container body">
         <div class="main_container">
@@ -28,9 +29,8 @@
 
                     <br />
 
-                    
-                    <!-- /sidebar menu -->
-                    <!-- @include('layouts.sidebar') -->
+
+
 
 
                 </div>
@@ -48,11 +48,12 @@
                         <div class="col-md-6">
 
                             <form id="myform">
-                                <input type="hidden" name='slug' id='slug' value="@if($id>0) {{ $row->slug }} @endif">                                <div id="duplicateEventAlert" class="alert alert-danger d-none" role="alert">
+                                <input type="hidden" name='slug' id='slug' value="@if($id>0) {{ $row->slug }} @endif">
+                                <div id="duplicateEventAlert" class="alert alert-danger d-none" role="alert">
                                     This event has already been created.
                                 </div>
                                 <div class="alert alert-primary d-none" role="alert" id="successPopup">
-                                    
+
                                 </div>
                                 @csrf
                                 <input type="hidden" name="id" id="id" value="{{ $id }}">
@@ -60,8 +61,8 @@
                                     @if($id>0)
                                     <div class="form-group col-md-4">
                                         <label for="eventName" class="form-label">Event Name *</label>
-                                        <input disabled type="text" class="form-control" id="event_code" name="event_code"
-                                            value="@if($id>0) {{ $row->event_code }} @endif"></input>
+                                        <input disabled type="text" class="form-control" id="event_code"
+                                            name="event_code" value="@if($id>0) {{ $row->event_code }} @endif"></input>
                                     </div>
                                     @endif
                                     <div class="form-group col-md-4">
@@ -83,7 +84,9 @@
                                 <div class="form-row">
                                     <div class="form-group col-md-6">
                                         <label for="endDate" class="form-label">End Date *</label>
-                                        <input type="text" value="@if($id>0) {{ date('m/d/Y', strtotime($row->end_date)) }} @endif" class="form-control" id="endDate" name="end_date">
+                                        <input type="text"
+                                            value="@if($id>0) {{ date('m/d/Y', strtotime($row->end_date)) }} @endif"
+                                            class="form-control" id="endDate" name="end_date">
                                     </div>
                                     <div class=" form-group col-md-6">
                                         <label for="status" class="form-label">Status *</label>
@@ -136,16 +139,16 @@
 
     <script>
     $(document).ready(function() {
-        
-  $( function() {
-    $( "#startDate" ).datepicker();
-  } );
- 
- 
-  $( function() {
-    $( "#endDate" ).datepicker();
-  } );
- 
+
+        $(function() {
+            $("#startDate").datepicker();
+        });
+
+
+        $(function() {
+            $("#endDate").datepicker();
+        });
+
         $('#myform').submit(function(event) {
             event.preventDefault();
             $.ajax({
@@ -159,7 +162,7 @@
                         $('#successPopup').removeClass('d-none');
                     } else if (response.duplicate) {
                         $('#duplicateEventAlert').removeClass('d-none');
-                        
+
                         setTimeout(function() {
                             $('#duplicateEventAlert').addClass('d-none');
                         }, 5000);
@@ -178,12 +181,12 @@
     </script>
 
     <script>
-        function generateSlug(title) {
+    function generateSlug(title) {
         return title.trim().toLowerCase().replace(/\s+/g, '-').replace(/[^\w\-]+/g, '');
     }
     $(document).ready(function() {
 
-        $('#eventName').on('keyup', function () {
+        $('#eventName').on('keyup', function() {
             var title = $('#eventName').val();
             var slug = generateSlug(title);
             $('#slug').val(slug);

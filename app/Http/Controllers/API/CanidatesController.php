@@ -11,6 +11,8 @@ use Illuminate\Support\Facades\File;
 use App\Models\Categories;
 use App\Models\Events;
 use App\Models\Candidates;
+use Illuminate\Support\Facades\Mail;
+use App\Mail\ResumeSubmitted; 
 
 class CanidatesController extends BaseController {
 
@@ -79,6 +81,7 @@ class CanidatesController extends BaseController {
                             $code = 200;
                             $status = 'success';
                             $message = 'Your resume has been  succssfully sent';
+                            Mail::to($request->email)->send(new ResumeSubmitted($request->name));
                         }
                     } else {
                         $status = 'extension_fail';
