@@ -31,7 +31,7 @@
                         <!-- <br /> -->
 
                         
-                        <!-- @include('layouts.sidebar') -->
+
                         <!-- /sidebar menu -->
 
                     <!-- </div> -->
@@ -42,11 +42,12 @@
                 <!-- /top navigation -->
 
                 <!-- page content -->
-                <div class="right_col" role="main">
+                <div class="right_col extra-page-margin" role="main">
                     <div class="">
-                        <div class="page-title">
+                        <!-- Delete this -->
+                        <!-- <div class="page-title">
                           
-                        </div>
+                        </div> -->
 
                         <div class="clearfix"></div>
 
@@ -58,6 +59,7 @@
                                         <div class="clearfix"></div>
                                     </div> -->
                                     <div class="x_content">
+                                        <h1 class="pb-4">Event Management</h1>
                                         <div class="row">
                                             <div class="col-sm-12">
                                                 <div class="card-box table-responsive">
@@ -114,9 +116,9 @@
                                                             ?>
                                                         </div>
                                                     </div>
-                                                    <table id="event_table" class="table table-bordered"
+                                                    <table id="event_table" class="table"
                                                         style="width:100%">
-                                                        <thead class="bg-[#E4F1FD] head-color">
+                                                        <thead class="head-color">
                                                             <tr>
                                                                 <th>Sr. No.</th>
                                                                 <th>Event Code</th>
@@ -249,6 +251,17 @@
     });
     </script>
     <style>
+        .x_panel{
+            padding: 0 !important;
+        }
+        .extra-page-margin{
+            margin-left: 0 !important;
+            padding: 0 !important;
+        }
+        .x_panel{
+            width: 100vw;
+    height: 100vh;
+        }
         .head-color{
             background-color: #E4F1FD;
         }
@@ -269,8 +282,8 @@
     }
 
     .qr-code img {
-        width: 50px;
-        min-height: 50px;
+        width: 25px;
+        /* min-height: 50px; */
     }
 
     .img-replace {
@@ -293,11 +306,6 @@
         align-items: center;
         /* margin-top: 50px; */
     }
-
-    .qr-code img {
-        width: 50px;
-    }
-
     .qr-code.open-modal {
         /* Customize appearance as needed (e.g., cursor, display) */
         cursor: pointer;
@@ -351,10 +359,31 @@
         border-radius: 3px;
         /* Add rounded corners for the button */
     }
+    .head-color{
+            background-color: #E4F1FD;
+        }
+        /* .head-color td{
+            display: flex;
+            justify-content: center;
+        } */
+        #event_table{
+            margin-top: 20px !important;
+        }
+        #event_table_filter{
+            position: absolute;
+            z-index: 9989;
+            right: 1314px;
+        }
 
-    .dataTables_wrapper .row:first-child,
+        #event_table_info{
+            padding-left: 170px;
+        }
+        .row{
+            position: relative;
+        }
+        #event_table_wrapper .row:first-child,
     .dataTables_wrapper .row:first-child .col-sm-6  {
-        position: static;
+        position: static !important;
     }
 
     #event_table_length {
@@ -364,6 +393,19 @@
         left: 0;
         top: auto;
     }
+
+    /* #event_table_wrapper .row:first-child,
+    .dataTables_wrapper .row:first-child .col-sm-6  {
+        position: static !important;
+    }
+
+    #event_table_length {
+        position: absolute;
+        bottom: -17px;
+        z-index: 9999;
+        left: 0;
+        top: auto;
+    } */
     </style>
 
 </body>

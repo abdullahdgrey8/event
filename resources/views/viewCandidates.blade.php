@@ -6,7 +6,7 @@
     <!-- New Content -->
     <div class="nav-md">
         <div class="container body">
-            <div class="main_container">
+            <!-- <div class="main_container">
                 <div class="col-md-3 left_col">
                     <div class="left_col scroll-view">
                         <div class="navbar nav_title" style="border: 0;">
@@ -16,7 +16,7 @@
                         <div class="clearfix"></div>
                         
                         <!-- menu profile quick info -->
-                        <div class="profile clearfix">
+                        <!-- <div class="profile clearfix">
                             <div class="profile_pic">
                                 <img src="{{ asset('/build/images/img.jpg') }}" alt="..."
                                     class="img-circle profile_img">
@@ -25,38 +25,37 @@
                                 <span>Welcome,</span>
                                 <h2>John Doe</h2>
                             </div>
-                        </div>
+                        </div> -->
                         <!-- /menu profile quick info -->
 
-                        <br />
+                        <!-- <br /> -->
 
-                        
-                        @include('layouts.sidebar')
+
                         <!-- /sidebar menu -->
-
+<!-- 
                     </div>
-                </div>
+                </div> -->
 
                 
                 @include('layouts.nav')
                 <!-- /top navigation -->
 
                 <!-- page content -->
-                <div class="right_col" role="main">
+                <div class="right_col extra-page-margin" role="main">
                     <div class="">
-                        <div class="page-title">
+                        <!-- <div class="page-title">
                           
-                        </div>
+                        </div> -->
 
                         <div class="clearfix"></div>
 
                         <div class="row">
                             <div class="col-md-12 col-sm-12 table-top">
                                 <div class="x_panel">
-                                    <div class="x_title">
+                                    <!-- <div class="x_title">
 
                                         <div class="clearfix"></div>
-                                    </div>
+                                    </div> -->
                                     <div class="x_content">
                                         <div class="row">
                                             <div class="col-sm-12">
@@ -94,7 +93,7 @@
                 <!-- /page content -->
             </div>
         </div>
-        <div class="modal" tabindex="-1" role="dialog" id="modal-container">
+        <!-- <div class="modal" tabindex="-1" role="dialog" id="modal-container">
             <div class="modal-dialog" role="document">
                 <div class="modal-content">
                     <div class="modal-header">
@@ -106,7 +105,7 @@
                     </div>
                 </div>
             </div>
-        </div>
+        </div> -->
         @include('components.Scripts')
     </div>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.17.4/xlsx.full.min.js"></script>
@@ -198,6 +197,17 @@
   });
     </script>
     <style>
+         .x_panel{
+            padding: 0 !important;
+        }
+        .extra-page-margin{
+            margin-left: 0 !important;
+            padding: 0 !important;
+        }
+        .x_panel{
+            width: 100vw;
+    height: 100vh;
+        }
         .head-color{
             background-color: #E4F1FD;
         }
@@ -207,13 +217,10 @@
         #event_table_filter{
             position: absolute;
             z-index: 9989;
-            right: 1314px;
+            left: 15px;
+            top: 5px;
         }
-        #event_table_length{
-            position: absolute;
-            top: 206px;
-            z-index: 9999;
-        }
+
         #event_table_info{
             padding-left: 170px;
         }
@@ -226,17 +233,42 @@
         font-weight: 600;
         font-size: medium;
         border: none;
-    position: absolute;
-    right: 21px;
-    /* top: 7px; */
-    /* background-color: #2A3F52; */
-    width: 166px;
-height: 44px;
+        position: absolute;
+        right: 30px;
+        top: 7px;
 
-border-radius: 2px;
+        width: 166px;
+        height: 44px;   
+
+        border-radius: 2px;
 
     z-index: 9999;
   }
+  #event_table{
+            margin-top: 20px !important;
+        }
+
+        #event_table_info{
+            padding-left: 170px;
+        }
+        .row{
+            position: relative;
+        }
+        #event_table_wrapper .row:first-child,
+    .dataTables_wrapper .row:first-child .col-sm-6  {
+        position: static !important;
+    }
+    #event_table_wrapper{
+        padding: 50px 0 !important;
+    }
+
+    #event_table_length {
+        position: absolute;
+        bottom: -17px;
+        z-index: 9999;
+        left: 0;
+        top: auto;
+    }
     </style>
 
 </body>
