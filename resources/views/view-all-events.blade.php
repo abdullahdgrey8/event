@@ -7,16 +7,16 @@
     <div class="nav-md">
         <div class="container body">
             <!-- <div class="main_container"> -->
-                <!-- <div class="col-md-3 left_col"> -->
-                    <!-- <div class="left_col scroll-view"> -->
-                        <!-- <div class="navbar nav_title" style="border: 0;">
+            <!-- <div class="col-md-3 left_col"> -->
+            <!-- <div class="left_col scroll-view"> -->
+            <!-- <div class="navbar nav_title" style="border: 0;">
                             <img src="{{ asset('/build/images/ttl.svg') }}" alt="">
                         </div> -->
 
-                        <!-- <div class="clearfix"></div> -->
-                        
-                        <!-- menu profile quick info -->
-                        <!-- <div class="profile clearfix">
+            <!-- <div class="clearfix"></div> -->
+
+            <!-- menu profile quick info -->
+            <!-- <div class="profile clearfix">
                             <div class="profile_pic">
                                 <img src="{{ asset('/build/images/img.jpg') }}" alt="..."
                                     class="img-circle profile_img">
@@ -26,120 +26,118 @@
                                 <h2>John Doe</h2>
                             </div>
                         </div> -->
-                        <!-- /menu profile quick info -->
+            <!-- /menu profile quick info -->
 
-                        <!-- <br /> -->
+            <!-- <br /> -->
 
-                        
 
-                        <!-- /sidebar menu -->
 
-                    <!-- </div> -->
-                <!-- </div> -->
+            <!-- /sidebar menu -->
 
-                
-                @include('layouts.nav')
-                <!-- /top navigation -->
+            <!-- </div> -->
+            <!-- </div> -->
 
-                <!-- page content -->
-                <div class="right_col extra-page-margin" role="main">
-                    <div class="">
-                        <!-- Delete this -->
-                        <!-- <div class="page-title">
+
+            @include('layouts.nav')
+            <!-- /top navigation -->
+
+            <!-- page content -->
+            <div class="right_col extra-page-margin" role="main">
+                <div class="">
+                    <!-- Delete this -->
+                    <!-- <div class="page-title">
                           
                         </div> -->
 
-                        <div class="clearfix"></div>
+                    <div class="clearfix"></div>
 
-                        <div class="row">
-                            <div class="col-md-12 col-sm-12 ">
-                                <div class="x_panel">
-                                    <!-- <div class="x_title">
+                    <div class="row">
+                        <div class="col-md-12 col-sm-12 ">
+                            <div class="x_panel">
+                                <!-- <div class="x_title">
 
                                         <div class="clearfix"></div>
                                     </div> -->
-                                    <div class="x_content">
-                                        <h1 class="pb-4">Event Management</h1>
-                                        <div class="row">
-                                            <div class="col-sm-12">
-                                                <div class="card-box table-responsive">
+                                <div class="x_content">
+                                    <h1 class="pb-4">Event Management</h1>
+                                    <div class="row">
+                                        <div class="col-sm-12">
+                                            <div class="card-box ">
 
-                                                    <div style="display:flex; justify-content:space-between;">
-                                                        <div style="display:flex;gap:10px; ">
-                                                            <div>
-                                                                <label for="event_code">Event Code:</label><br>
-                                                                <input type="text" id="event_code" name="event_code"
-                                                                    class="form-control">
-                                                            </div>
-                                                            <div>
+                                                <div style="display:flex; justify-content:space-between;">
+                                                    <div style="display:flex;gap:10px; ">
+                                                        <div>
+                                                            <label for="event_code">Event Code:</label><br>
+                                                            <input type="text" id="event_code" name="event_code"
+                                                                class="form-control">
+                                                        </div>
+                                                        <div>
 
-                                                                <label for="event_name">Event Name:</label><br>
-                                                                <input type="text" id="event_name" name="event_name"
-                                                                    class="form-control">
-                                                            </div>
+                                                            <label for="event_name">Event Name:</label><br>
+                                                            <input type="text" id="event_name" name="event_name"
+                                                                class="form-control">
+                                                        </div>
 
-                                                            <div>
+                                                        <div>
 
-                                                                <label for="start_date">Start Date:</label><br>
-                                                                <input type="date" id="start_date" name="start_date"
-                                                                    class="form-control">
-                                                            </div>
-                                                            <div>
+                                                            <label for="start_date">Start Date:</label><br>
+                                                            <input type="date" id="start_date" name="start_date"
+                                                                class="form-control">
+                                                        </div>
+                                                        <div>
 
 
-                                                                <label for="end_date">End Date:</label><br>
-                                                                <input type="date" id="end_date" name="end_date"
-                                                                    class="form-control">
-                                                            </div>
-                                                            <div>
+                                                            <label for="end_date">End Date:</label><br>
+                                                            <input type="date" id="end_date" name="end_date"
+                                                                class="form-control">
+                                                        </div>
+                                                        <div>
 
-                                                                <label for="status">Status:</label><br>
-                                                                <select name="status" id="status" class="form-control">
-                                                                    <option value="">Select Status</option>
-                                                                    <option value="1">Active</option>
-                                                                    <option value="0">inactive</option>
-                                                                </select>
-                                                            </div>
-
-                                                            <div style="margin-top: 25px;">
-                                                                <a href=""></a>
-                                                                <button id="apply_filters"
-                                                                    class="btn btn-secondary">Apply</button>
-                                                            </div>
+                                                            <label for="status">Status:</label><br>
+                                                            <select name="status" id="status" class="form-control">
+                                                                <option value="">Select Status</option>
+                                                                <option value="1">Active</option>
+                                                                <option value="0">inactive</option>
+                                                            </select>
                                                         </div>
 
                                                         <div style="margin-top: 25px;">
-                                                            <?php
+                                                            <a href=""></a>
+                                                            <button id="apply_filters"
+                                                                class="btn btn-secondary">Apply</button>
+                                                        </div>
+                                                    </div>
+
+                                                    <div style="margin-top: 25px;">
+                                                        <?php
                                                             $baseUrl = url('/');
                                                             echo '<a id="apply_filters" class="btn btn-primary" href="'.$baseUrl.'/add-event'.'">Add New
                                                             Event</a>'
                                                             ?>
-                                                        </div>
                                                     </div>
-                                                    <table id="event_table" class="table"
-                                                        style="width:100%">
-                                                        <thead class="head-color">
-                                                            <tr>
-                                                                <th>Sr. No.</th>
-                                                                <th>Event Code</th>
-                                                                <th>Event Name</th>
-                                                                <th>Description</th>
-                                                                <th>Start date</th>
-                                                                <th>End Date</th>
-                                                                <th>Status</th>
-                                                                <th>QR-Code</th>
-                                                                <th>URL</th>
-                                                                <th>Actions</th>
-                                                            </tr>
-                                                        </thead>
-
-
-                                                        <tbody>
-
-
-                                                        </tbody>
-                                                    </table>
                                                 </div>
+                                                <table id="event_table" class="table" style="width:100%">
+                                                    <thead class="head-color">
+                                                        <tr>
+                                                            <th>Sr. No.</th>
+                                                            <th>Event Code</th>
+                                                            <th>Event Name</th>
+                                                            <th>Description</th>
+                                                            <th>Start date</th>
+                                                            <th>End Date</th>
+                                                            <th>Status</th>
+                                                            <th>QR-Code</th>
+                                                            <th>URL</th>
+                                                            <th>Actions</th>
+                                                        </tr>
+                                                    </thead>
+
+
+                                                    <tbody>
+
+
+                                                    </tbody>
+                                                </table>
                                             </div>
                                         </div>
                                     </div>
@@ -148,7 +146,8 @@
                         </div>
                     </div>
                 </div>
-                <!-- /page content -->
+            </div>
+            <!-- /page content -->
             <!-- </div> -->
         </div>
         <div class="modal" tabindex="-1" role="dialog" id="modal-container">
@@ -167,11 +166,11 @@
         @include('components.Scripts')
     </div>
     <script>
-         var csrfToken = '{{ csrf_token() }}';
+    var csrfToken = '{{ csrf_token() }}';
     $(document).ready(function() {
         $(document).on("click", ".open-modal", function() {
             var id = $(this).attr("data");
-            
+
             //console.warn(id);
             $.ajax({
                 url: "{{ route('generate.qr.code') }}",
@@ -191,7 +190,7 @@
             });
         });
     });
-    
+
     $(document).ready(function() {
         var table = $('#event_table').DataTable({
             "aoColumnDefs": [{
@@ -246,28 +245,33 @@
             objTable.draw();
         });
 
-       
-    
+
+
     });
     </script>
     <style>
-        .x_panel{
-            padding: 0 !important;
-        }
-        .extra-page-margin{
-            margin-left: 0 !important;
-            padding: 0 !important;
-        }
-        .x_panel{
-            width: 100vw;
-    height: 100vh;
-        }
-        .head-color{
-            background-color: #E4F1FD;
-        }
-        #event_table_filter{
-            display: none;
-        }
+    .x_panel {
+        padding: 0 !important;
+    }
+
+    .extra-page-margin {
+        margin-left: 0 !important;
+        padding: 0 !important;
+    }
+
+    .x_panel {
+        width: 100vw;
+        height: 100vh;
+    }
+
+    .head-color {
+        background-color: #E4F1FD;
+    }
+
+    #event_table_filter {
+        display: none;
+    }
+
     .edit-action {
         display: flex;
         justify-content: center;
@@ -306,6 +310,7 @@
         align-items: center;
         /* margin-top: 50px; */
     }
+
     .qr-code.open-modal {
         /* Customize appearance as needed (e.g., cursor, display) */
         cursor: pointer;
@@ -359,30 +364,35 @@
         border-radius: 3px;
         /* Add rounded corners for the button */
     }
-    .head-color{
-            background-color: #E4F1FD;
-        }
-        /* .head-color td{
+
+    .head-color {
+        background-color: #E4F1FD;
+    }
+
+    /* .head-color td{
             display: flex;
             justify-content: center;
         } */
-        #event_table{
-            margin-top: 20px !important;
-        }
-        #event_table_filter{
-            position: absolute;
-            z-index: 9989;
-            right: 1314px;
-        }
+    #event_table {
+        margin-top: 20px !important;
+    }
 
-        #event_table_info{
-            padding-left: 170px;
-        }
-        .row{
-            position: relative;
-        }
-        #event_table_wrapper .row:first-child,
-    .dataTables_wrapper .row:first-child .col-sm-6  {
+    #event_table_filter {
+        position: absolute;
+        z-index: 9989;
+        right: 1314px;
+    }
+
+    #event_table_info {
+        padding-left: 170px;
+    }
+
+    .row {
+        position: relative;
+    }
+
+    #event_table_wrapper .row:first-child,
+    .dataTables_wrapper .row:first-child .col-sm-6 {
         position: static !important;
     }
 
@@ -393,8 +403,6 @@
         left: 0;
         top: auto;
     }
-
-
     </style>
 
 </body>

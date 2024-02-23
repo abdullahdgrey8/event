@@ -2,15 +2,23 @@
 
 <x-navbar />
 <link rel="stylesheet" href="//code.jquery.com/ui/1.13.2/themes/base/jquery-ui.css">
+<style>
+body {
+    margin: 0px;
+    /* height: 90vh; */
+    box-sizing: border-box;
+    /* background: #fff; */
+}
+</style>
 
 <body class="nav-md">
     <div class="container body">
         <div class="main_container">
-            <div class="col-md-3 left_col">
-                <div class="left_col scroll-view">
+            <div class="col-md-3 left_col" style="display: none;">
+                <div class="left_col scroll-view" style="height: 70vh !important; ">
                     <div class="navbar nav_title" style="border: 0;">
 
-                        <img src="{{ asset('/build/images/ttl.svg') }}" alt="">
+                        <!-- <img src="{{ asset('/build/images/ttl.svg') }}" alt=""> -->
                     </div>
 
                     <div class="clearfix"></div>
@@ -37,16 +45,20 @@
             </div>
 
             <!-- top navigation -->
-            @include('layouts.nav')
+
             <!-- /top navigation -->
 
             <!-- Page Content -->
-            <div class="bg-white vh-100 relative">
-                <h1>Add Event</h1>
-                <div class="mt-5 mb-5">
+            @include('layouts.nav')
+
+            <div class="bg-white relative inner-container">
+                <div class="mt-5 mb-5 px-3">
                     <div class="row justify-content-center">
                         <div class="col-md-6">
-
+                            <p>Event Management > Add Event</p>
+                            <h1 class="mb-[50px]">Add New Event</h1>
+                            <br>
+                            <br>
                             <form id="myform">
                                 <input type="hidden" name='slug' id='slug' value="@if($id>0) {{ $row->slug }} @endif">
                                 <div id="duplicateEventAlert" class="alert alert-danger d-none" role="alert">

@@ -1172,7 +1172,7 @@ body .container.body .right_col {
 }
 body {
     color: #73879c;
-    background: #2a3f54;
+    background: #fff !important;
     font-family: "Helvetica Neue", Roboto, Arial, "Droid Sans", sans-serif;
     font-size: 13px;
     font-weight: 400;
