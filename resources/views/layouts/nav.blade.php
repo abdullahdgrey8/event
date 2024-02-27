@@ -1,5 +1,5 @@
 <div class="">
-    <div class='flex justify-between p-4 top-bar'>
+    <div class='flex justify-between top-bar px-4 pt-4'>
         <div class="ttl-logo"><img src="{{ asset('/build/images/logo.png') }}" alt=""></div>
         <nav class="nav navbar-nav">
             <ul class=" extra-navbar-right">
