@@ -55,8 +55,16 @@ body {
                 <div class="mt-5 mb-5 px-3">
                     <div class="row justify-content-center">
                         <div class="col-md-6">
-                            <p>Event Management > Add Event</p>
-                            <h1 class="mb-[50px]">Add New Event</h1>
+                            @if($id > 0)
+                            <p><a href="{{ url('view-events') }}">Event Management</a> > Edit Event</p>
+                            @else
+                            <p><a href="{{ url('view-events') }}">Event Management</a> > Add Event</p>
+                            @endif
+                            @if($id > 0)
+                            <p style="font-size:20px; font-weight:bold; color:black;">Edit Event</p>
+                            @else
+                            <p style="font-size:20px; font-weight:bold; color:black;">Add Event</p>
+                            @endif
                             <br>
                             <br>
                             <form id="myform">
@@ -65,7 +73,7 @@ body {
                                     This event has already been created.
                                 </div>
                                 <div class="alert alert-primary d-none" role="alert" id="successPopup">
-
+                                    Event Created Successfully
                                 </div>
                                 @csrf
                                 <input type="hidden" name="id" id="id" value="{{ $id }}">
@@ -109,7 +117,14 @@ body {
                                     </div>
                                 </div>
                                 <div class="form-group text-right fixed bottom-0 right-0">
-                                    <button type="submit" class="btn btn-secondary">Save</button>
+                                    @if($id > 0)
+                                    <button type="submit" class="btn btn-secondary"
+                                        style="background-color:#1890FF; border:none;">Update</button>
+                                    @else
+                                    <button type="submit" class="btn btn-secondary"
+                                        style="background-color:#1890FF; border:none;">Save</button>
+                                    @endif
+
                                     <button type="button" class="btn btn-secondary ml-2">Cancel
                                     </button>
                                 </div>
@@ -172,6 +187,9 @@ body {
                     $('#successPopup').html(response.message);
                     if (response.success) {
                         $('#successPopup').removeClass('d-none');
+                        setTimeout(function() {
+                            window.location.href = '{{ route("viewEvents") }}';
+                        }, 4000);
                     } else if (response.duplicate) {
                         $('#duplicateEventAlert').removeClass('d-none');
 
@@ -188,6 +206,11 @@ body {
         });
         $('#closePopupBtn').click(function() {
             $('#successPopup').hide();
+        });
+        $('.btn-secondary').click(function() {
+            setTimeout(function() {
+                window.location.href = '{{ route("viewEvents") }}';
+            }, 2000);
         });
     });
     </script>
