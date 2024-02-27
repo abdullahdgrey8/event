@@ -12,117 +12,126 @@ body {
 </style>
 
 <body class="nav-md">
-    <div class="container body">
-        <div class="main_container">
-            <div class="col-md-3 left_col" style="display: none;">
-                <div class="left_col scroll-view" style="height: 70vh !important; ">
-                    <div class="navbar nav_title" style="border: 0;">
+    <!-- Display validation errors -->
+@if ($errors->any())
+    <div class="alert alert-danger">
+        <ul>
+            @foreach ($errors->all() as $error)
+                <li>{{ $error }}</li>
+            @endforeach
+        </ul>
+    </div>
+@endif
 
-                        <!-- <img src="{{ asset('/build/images/ttl.svg') }}" alt=""> -->
+<div class="bg-white relative inner-container">
+    <div class="mt-5 mb-5 px-3">
+        <div class="row justify-content-center">
+            <div class="col-md-6">
+                <p>Event Management > Add Event</p>
+                <h1 class="mb-[50px]">Add New Event</h1>
+                <br>
+                <br>
+
+                <!-- Form start -->
+
+                <form id="myform">
+                @if ($errors->any())
+    <div class="alert alert-danger">
+        <ul>
+            @foreach ($errors->all() as $error)
+                <li>{{ $error }}</li>
+            @endforeach
+        </ul>
+    </div>
+@endif
+
+                    <!-- Hidden input fields -->
+                    <!-- Alert for duplicate event -->
+                    <div id="duplicateEventAlert" class="alert alert-danger d-none" role="alert">
+                        This event has already been created.
+                    </div>
+                    <div id="dateError" class="alert alert-danger d-none" role="alert">
+                    The end date field must be a date after start date.
+                    </div>
+                    <!-- Alert for success -->
+                    <div class="alert alert-primary d-none" role="alert" id="successPopup">
+
                     </div>
 
-                    <div class="clearfix"></div>
+                    <!-- CSRF Token -->
+                    @csrf
 
-                    <!-- menu profile quick info -->
-                    <!-- <div class="profile clearfix">
-                        <div class="profile_pic">
-                            <img src="{{ asset('/build/images/img.jpg') }}" alt="..." class="img-circle profile_img">
+                    <!-- Event ID field -->
+                    <input type="hidden" name="id" id="id" value="{{ $id }}">
+
+                    <!-- Event Code field -->
+                    @if($id > 0)
+                        <div class="form-group col-md-4">
+                            <label for="event_code" class="form-label">Event Code *</label>
+                            <input disabled type="text" class="form-control" id="event_code" name="event_code" value="{{ $row->event_code }}">
                         </div>
-                        <div class="profile_info">
-                            <span>Welcome,</span>
-                            <h2>John Doe</h2>
-                        </div>
-                    </div> -->
-                    <!-- /menu profile quick info -->
+                    @endif
 
-                    <br />
-
-
-
-
-
-                </div>
-            </div>
-
-            <!-- top navigation -->
-
-            <!-- /top navigation -->
-
-            <!-- Page Content -->
-            @include('layouts.nav')
-
-            <div class="bg-white relative inner-container">
-                <div class="mt-5 mb-5 px-3">
-                    <div class="row justify-content-center">
-                        <div class="col-md-6">
-                            <p>Event Management > Add Event</p>
-                            <h1 class="mb-[50px]">Add New Event</h1>
-                            <br>
-                            <br>
-                            <form id="myform">
-                                <input type="hidden" name='slug' id='slug' value="@if($id>0) {{ $row->slug }} @endif">
-                                <div id="duplicateEventAlert" class="alert alert-danger d-none" role="alert">
-                                    This event has already been created.
-                                </div>
-                                <div class="alert alert-primary d-none" role="alert" id="successPopup">
-
-                                </div>
-                                @csrf
-                                <input type="hidden" name="id" id="id" value="{{ $id }}">
-                                <div class="form-row">
-                                    @if($id>0)
-                                    <div class="form-group col-md-4">
-                                        <label for="eventName" class="form-label">Event Name *</label>
-                                        <input disabled type="text" class="form-control" id="event_code"
-                                            name="event_code" value="@if($id>0) {{ $row->event_code }} @endif"></input>
-                                    </div>
-                                    @endif
-                                    <div class="form-group col-md-4">
-                                        <label for="eventName" class="form-label">Event Name *</label>
-                                        <input type="text" class="form-control" id="eventName" name="event_name"
-                                            value="@if($id>0) {{ $row->event_name }} @endif"></input>
-                                    </div>
-                                    <div class="form-group col-md-4">
-                                        <label for="description" class="form-label">Description *</label>
-                                        <input class="form-control" id="description" name="description" rows="3"
-                                            value="@if($id>0) {{ $row->description }} @endif"></input>
-                                    </div>
-                                    <div class="form-group col-md-4">
-                                        <label for="startDate" class="form-label">Start Date *</label>
-                                        <input type="text" class="form-control" id="startDate" name="start_date"
-                                            value="@if($id>0) {{ date('m/d/Y', strtotime($row->start_date)) }} @endif">
-                                    </div>
-                                </div>
-                                <div class="form-row">
-                                    <div class="form-group col-md-6">
-                                        <label for="endDate" class="form-label">End Date *</label>
-                                        <input type="text"
-                                            value="@if($id>0) {{ date('m/d/Y', strtotime($row->end_date)) }} @endif"
-                                            class="form-control" id="endDate" name="end_date">
-                                    </div>
-                                    <div class=" form-group col-md-6">
-                                        <label for="status" class="form-label">Status *</label>
-                                        <select class="form-control" id="status" name="status">
-                                            <option value="1">Active</option>
-                                            <option value="0">Inactive</option>
-                                        </select>
-                                    </div>
-                                </div>
-                                <div class="form-group text-right fixed bottom-0 right-0">
-                                    <button type="submit" class="btn btn-secondary">Save</button>
-                                    <button type="button" class="btn btn-secondary ml-2">Cancel
-                                    </button>
-                                </div>
-                            </form>
-                        </div>
+                    <!-- Event Name field -->
+                    <div class="form-group col-md-4">
+                        <label for="eventName" class="form-label">Event Name *</label>
+                        <input type="text" class="form-control" id="eventName" name="event_name" value="{{ old('event_name', $id > 0 ? $row->event_name : '') }}">
+                        @error('event_name')
+                            <div class="text-danger">{{ $message }}</div>
+                        @enderror
                     </div>
-                </div>
+
+                    <!-- Description field -->
+                    <div class="form-group col-md-4">
+                        <label for="description" class="form-label">Description *</label>
+                        <input class="form-control" id="description" name="description" rows="3" value="{{ old('description', $id > 0 ? $row->description : '') }}"></input>
+                        @error('description')
+                            <div class="text-danger">{{ $message }}</div>
+                        @enderror
+                    </div>
+
+                    <!-- Start Date field -->
+                    <div class="form-group col-md-4">
+                        <label for="startDate" class="form-label">Start Date *</label>
+                        <input type="text" class="form-control" id="startDate" name="start_date" value="{{ old('start_date', $id > 0 ? date('m/d/Y', strtotime($row->start_date)) : '') }}">
+                        @error('start_date')
+                            <div class="text-danger">{{ $message }}</div>
+                        @enderror
+                    </div>
+
+                    <!-- End Date field -->
+                    <div class="form-group col-md-6">
+                        <label for="endDate" class="form-label">End Date *</label>
+                        <input type="text" class="form-control" id="endDate" name="end_date" value="{{ old('end_date', $id > 0 ? date('m/d/Y', strtotime($row->end_date)) : '') }}">
+                        @error('end_date')
+                            <div class="text-danger">{{ $message }}</div>
+                        @enderror
+                    </div>
+
+                    <!-- Status field -->
+                    <div class=" form-group col-md-6">
+                        <label for="status" class="form-label">Status *</label>
+                        <select class="form-control" id="status" name="status">
+                            <option value="1" {{ old('status', $id > 0 ? $row->status : '') == '1' ? 'selected' : '' }}>Active</option>
+                            <option value="0" {{ old('status', $id > 0 ? $row->status : '') == '0' ? 'selected' : '' }}>Inactive</option>
+                        </select>
+                        @error('status')
+                            <div class="text-danger">{{ $message }}</div>
+                        @enderror
+                    </div>
+
+                    <!-- Form actions -->
+                    <div class="form-group text-right fixed bottom-0 right-0">
+                        <button type="submit" class="btn btn-secondary">Save</button>
+                        <button type="button" class="btn btn-secondary ml-2">Cancel</button>
+                    </div>
+     
+                </form>
+                <!-- Form end -->
             </div>
-
-
-            <!-- Page Content -->
-
         </div>
+    </div>
+</div>
     </div>
 
 
@@ -162,23 +171,47 @@ body {
         });
 
         $('#myform').submit(function(event) {
+            //console.log('before error msg');
+
             event.preventDefault();
+            ///return false;
             $.ajax({
                 url: '{{ route("event.store") }}',
                 method: 'POST',
                 data: $(this).serialize(),
+                dataType:'json',
                 success: function(response) {
-                    console.log(response);
-                    $('#successPopup').html(response.message);
-                    if (response.success) {
-                        $('#successPopup').removeClass('d-none');
-                    } else if (response.duplicate) {
+                    if(response.status==='fail'){
+                        // var errorMessages= response.data;
+                        console.log(response.data.end_date[0])  ;
+                        $('#dateError').removeClass('d-none');
+                        setTimeout(function() {
+                            $('#dateError').addClass('d-none');
+                        }, 5000);
+                    } else if(response.status==='duplicate'){
                         $('#duplicateEventAlert').removeClass('d-none');
-
                         setTimeout(function() {
                             $('#duplicateEventAlert').addClass('d-none');
                         }, 5000);
+                        
                     }
+                    else{
+                        $('#successPopup').removeClass('d-none');
+                    }
+                    // console.log('------before error msg');
+                    console.warn(response)
+                    // return false;
+                    // $('#successPopup').html(response.message);
+                    // if (response.success) {
+                    //     $('#successPopup').removeClass('d-none');
+                    // } else if (response.duplicate) {
+                    //     $('#duplicateEventAlert').removeClass('d-none');
+
+                    //     setTimeout(function() {
+                    //         $('#duplicateEventAlert').addClass('d-none');
+                    //     }, 5000);
+                    // }
+
                 },
                 error: function(xhr, status, error) {
                     // Handle error response
