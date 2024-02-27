@@ -23,8 +23,15 @@
         <div class="mt-4">
             <x-input-label for="password" :value="__('Password')" />
 
-            <x-text-input id="password" class="block mt-1 w-full" type="password" name="password" required
-                autocomplete="current-password" />
+            <!-- <x-text-input id="password" class="block mt-1 w-full" type="password" name="password" required
+                autocomplete="current-password" /> -->
+            <div class="relative">
+                <x-text-input id="password" class="block mt-1 w-full pr-10" type="password" name="password" required
+                    autocomplete="current-password" />
+                <button type="button" onclick="togglePasswordVisibility()" class="absolute inset-y-0 right-0 px-3 py-1">
+                    <img src="{{ asset('/build/images/View.png') }}" alt="" style="width: 20px; height:20px;">
+                </button>
+            </div>
 
             <x-input-error :messages="$errors->get('password')" class="mt-2" />
         </div>
@@ -53,3 +60,20 @@
         </div>
     </form>
 </x-guest-layout>
+
+<script>
+function togglePasswordVisibility() {
+    var passwordInput = document.getElementById('password');
+    var passwordToggleIcon = document.getElementById('password-toggle-icon');
+
+    if (passwordInput.type === 'password') {
+        passwordInput.type = 'text';
+        passwordToggleIcon.classList.remove('fa-eye');
+        passwordToggleIcon.classList.add('fa-eye-slash');
+    } else {
+        passwordInput.type = 'password';
+        passwordToggleIcon.classList.remove('fa-eye-slash');
+        passwordToggleIcon.classList.add('fa-eye');
+    }
+}
+</script>
