@@ -196,12 +196,12 @@
         var table = $('#event_table').DataTable({
             "aoColumnDefs": [{
                 "bSortable": false,
-                "aTargets": [ 7, 8, 9]
+                "aTargets": [6 ,7, 8, 9]
             }],
             "bProcessing": true,
             "bServerSide": true,
             "aaSorting": [
-                [4, "desc"]
+                [0, "asc"]
             ],
             "sPaginationType": "full_numbers",
             "sAjaxSource": "{{ route('get.all.events') }}",
