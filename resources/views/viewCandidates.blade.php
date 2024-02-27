@@ -57,6 +57,10 @@
                                         <div class="clearfix"></div>
                                     </div> -->
                                     <div class="x_content">
+                                        <h1 style="color: black; text-transform:uppercase; padding:20px 0;">
+
+                                            {{ $event_row->event_name }}
+                                        </h1>
                                         <div class="row">
                                             <div class="col-sm-12">
                                                 <input type="hidden" name="event_id" id="event_id" value="{{ $event_id }}" />
@@ -197,16 +201,18 @@
   });
     </script>
     <style>
-         .x_panel{
-            padding: 0 !important;
-        }
+            #event_table th,
+    #event_table td {
+        text-align: center;
+    }
         .extra-page-margin{
             margin-left: 0 !important;
             padding: 0 !important;
         }
         .x_panel{
+            padding: 0 !important;
             width: 100vw;
-    height: 100vh;
+            height: auto !important;
         }
         .head-color{
             background-color: #E4F1FD;
@@ -222,8 +228,11 @@
         }
 
         #event_table_info{
-            padding-left: 170px;
+            display: none;
         }
+        table.dataTable thead .sorting:after, table.dataTable thead .sorting_desc:after, table.dataTable thead .sorting_asc:after{
+        display: none;
+    }
         .row{
             position: relative;
         }
@@ -264,7 +273,7 @@
 
     #event_table_length {
         position: absolute;
-        bottom: -17px;
+        bottom: 0;
         z-index: 9999;
         left: 0;
         top: auto;
