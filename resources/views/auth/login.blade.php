@@ -4,11 +4,10 @@
 
     <form method="POST" action="{{ route('login') }}">
         @csrf
-        <div class="w-[100%] mb-7">
-            <h1 class="font-bold text-[#081185] text-[40px] line-height-60">Sign In</h1>
-            <p class="text-[16px] pt-5">This is a secure site. Please enter your login information to enter or
-                you can register yourself
-            </p>
+        <div style="width: 100%; margin-bottom: 2.5rem;">
+            <h1 style="font-weight: bold; color: #081185; font-size: 40px; line-height: 60px;">Sign In</h1>
+            <p style="font-size: 16px; padding-top: 1.25rem;">This is a secure site. Please enter your login information
+                to enter or you can register yourself</p>
         </div>
 
         <!-- Email Address -->
@@ -16,25 +15,25 @@
             <x-input-label for="email" :value="__('Email')" />
             <x-text-input id="email" class="block mt-1 w-full" type="email" name="email" :value="old('email')" required
                 autofocus autocomplete="username" />
-            <x-input-error :messages="$errors->get('email')" class="mt-2" />
+
         </div>
 
         <!-- Password -->
         <div class="mt-4">
             <x-input-label for="password" :value="__('Password')" />
 
-            <!-- <x-text-input id="password" class="block mt-1 w-full" type="password" name="password" required
-                autocomplete="current-password" /> -->
             <div class="relative">
                 <x-text-input id="password" class="block mt-1 w-full pr-10" type="password" name="password" required
                     autocomplete="current-password" />
-                <button type="button" onclick="togglePasswordVisibility()" class="absolute inset-y-0 right-0 px-3 py-1">
+                <button type="button" onclick="togglePasswordVisibility()"
+                    style="position: absolute; top: 0; bottom: 0; right: 0; padding-right: 0.75rem; padding-left: 0.75rem; padding-top: 0.25rem; padding-bottom: 0.25rem;">
                     <img src="{{ asset('/build/images/View.png') }}" alt="" style="width: 20px; height:20px;">
                 </button>
             </div>
 
-            <x-input-error :messages="$errors->get('password')" class="mt-2" />
         </div>
+        <x-input-error :messages="$errors->get('email')" class="mt-2" />
+        <x-input-error :messages="$errors->get('password')" class="mt-2" />
 
         <!-- Remember Me -->
         <div class="block mt-4">
@@ -45,7 +44,7 @@
                     <span class="ms-2 text-sm text-gray-600">{{ __('Remember me') }}</span>
                 </div>
                 @if (Route::has('password.request'))
-                <a class="underline text-sm text-gray-600 hover:text-gray-900 rounded-md focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
+                <a style="transition-property: color; transition-duration: 0.2s; transition-timing-function: ease-in-out; transition-delay: initial; font-size: 0.875rem; color: #007FF2; padding-top: 0.25rem; padding-right: 0.5rem; padding-bottom: 0.25rem; padding-left: 0.5rem;"
                     href="{{ route('password.request') }}">
                     {{ __('Forgot your password?') }}
                 </a>
@@ -54,9 +53,11 @@
         </div>
 
         <div class="flex items-center justify-end mt-4">
-            <x-primary-button class=" w-[100%]">
-                {{ __('Log in') }}
+            <x-primary-button class=" w-[100%] hidden">
+                <!-- {{ __('Log in') }} -->
             </x-primary-button>
+            <button type="submit"
+                style="background: #081185; padding: 7px; color: white; font: 20px; width: 100%; font-weight: bold; border-radius: 5px; border: none;">Login</button>
         </div>
     </form>
 </x-guest-layout>

@@ -63,7 +63,7 @@ body {
                             @if($id > 0)
                             <p style="font-size:20px; font-weight:bold; color:black;">Edit Event</p>
                             @else
-                            <p style="font-size:20px; font-weight:bold; color:black;">Add Event</p>
+                            <p style="font-size:20px; font-weight:bold; color:black;">Add A New Event</p>
                             @endif
                             <br>
                             <br>
@@ -72,15 +72,18 @@ body {
                                 <div id="duplicateEventAlert" class="alert alert-danger d-none" role="alert">
                                     This event has already been created.
                                 </div>
+                                <div id="dateError" class="alert alert-danger d-none" role="alert">
+                                    The end date field must be a date after start date.
+                                </div>
                                 <div class="alert alert-primary d-none" role="alert" id="successPopup">
-                                    Event Created Successfully
+                                    Event has been added Successfully.
                                 </div>
                                 @csrf
                                 <input type="hidden" name="id" id="id" value="{{ $id }}">
                                 <div class="form-row">
                                     @if($id>0)
                                     <div class="form-group col-md-4">
-                                        <label for="eventName" class="form-label">Event Name *</label>
+                                        <label for="eventName" class="form-label">Event Code *</label>
                                         <input disabled type="text" class="form-control" id="event_code"
                                             name="event_code" value="@if($id>0) {{ $row->event_code }} @endif"></input>
                                     </div>
@@ -124,8 +127,7 @@ body {
                                     <button type="submit" class="btn btn-secondary"
                                         style="background-color:#1890FF; border:none;">Save</button>
                                     @endif
-
-                                    <button type="button" class="btn btn-secondary ml-2">Cancel
+                                    <button type="button" class="btn btn-secondary ml-2 btn-cancel">Cancel
                                     </button>
                                 </div>
                             </form>
@@ -177,26 +179,50 @@ body {
         });
 
         $('#myform').submit(function(event) {
+            //console.log('before error msg');
+
             event.preventDefault();
+            ///return false;
             $.ajax({
                 url: '{{ route("event.store") }}',
                 method: 'POST',
                 data: $(this).serialize(),
+                dataType: 'json',
                 success: function(response) {
-                    console.log(response);
-                    $('#successPopup').html(response.message);
-                    if (response.success) {
+                    if (response.status === 'success') {
                         $('#successPopup').removeClass('d-none');
                         setTimeout(function() {
                             window.location.href = '{{ route("viewEvents") }}';
                         }, 4000);
-                    } else if (response.duplicate) {
+                    } else if (response.status === 'fail') {
+                        // var errorMessages= response.data;
+                        console.log(response.data.end_date[0]);
+                        $('#dateError').removeClass('d-none');
+                        setTimeout(function() {
+                            $('#dateError').addClass('d-none');
+                        }, 5000);
+                    } else if (response.status === 'duplicate') {
                         $('#duplicateEventAlert').removeClass('d-none');
-
                         setTimeout(function() {
                             $('#duplicateEventAlert').addClass('d-none');
                         }, 5000);
+
                     }
+
+                    // console.log('------before error msg');
+                    console.warn(response)
+                    // return false;
+                    // $('#successPopup').html(response.message);
+                    // if (response.success) {
+                    //     $('#successPopup').removeClass('d-none');
+                    // } else if (response.duplicate) {
+                    //     $('#duplicateEventAlert').removeClass('d-none');
+
+                    //     setTimeout(function() {
+                    //         $('#duplicateEventAlert').addClass('d-none');
+                    //     }, 5000);
+                    // }
+
                 },
                 error: function(xhr, status, error) {
                     // Handle error response
@@ -207,7 +233,7 @@ body {
         $('#closePopupBtn').click(function() {
             $('#successPopup').hide();
         });
-        $('.btn-secondary').click(function() {
+        $('.btn-cancel').click(function() {
             setTimeout(function() {
                 window.location.href = '{{ route("viewEvents") }}';
             }, 2000);
