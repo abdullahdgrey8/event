@@ -58,12 +58,12 @@
                 <div class="form-row">
                     <div class="form-group col-md-6">
                         <label for="startDate">Start Date *</label>
-                        <input type="date" class="form-control" id="startDate" name="start_date"
+                        <input type="date" class="form-control" id="startDate" name="start_date" autocomplete="off"
                             value="{{ $event->start_date }}" required>
                     </div>
                     <div class="form-group col-md-6">
                         <label for="endDate">End Date *</label>
-                        <input type="date" class="form-control" id="endDate" name="end_date"
+                        <input type="date" class="form-control" id="endDate" name="end_date" autocomplete="off"
                             value="{{ $event->end_date }}" required>
                     </div>
                 </div>

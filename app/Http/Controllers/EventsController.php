@@ -7,6 +7,7 @@ use DB;
 use Auth;
 use App\Models\Events;
 use App\Models\Candidates;
+use Illuminate\Support\Facades\Validator;
 // use Baconslug\Encoder\slug;
 
 class EventsController extends Controller
@@ -45,6 +46,9 @@ class EventsController extends Controller
         }
         if ($status) {
             $result->where('status',  $status);
+        } 
+        else if($status == 0){
+            $result->where('status',  0);
         }
  
  
@@ -134,10 +138,10 @@ class EventsController extends Controller
 </div>';
  
  
-            $created_at = date("M j, Y, g:i a", strtotime($aRow->created_at));
-            $start_date = date("M j, Y, g:i a", strtotime($aRow->start_date));
-            $end_date = date("M j, Y, g:i a", strtotime($aRow->end_date));
-            $status = $aRow->status == 0 ? 'Inactive' : 'active';
+            $created_at = date("M j, Y", strtotime($aRow->created_at));
+            $start_date = date("M j, Y", strtotime($aRow->start_date));
+            $end_date = date("M j, Y", strtotime($aRow->end_date));
+            $status = $aRow->status == 0 ? 'Inactive' : 'Active';
  
             //'id', 'event_code', 'event_name', 'description', 'start_date', 'end_date', 'status','slug','url'
  
@@ -165,21 +169,28 @@ class EventsController extends Controller
 
     public function store(Request $request)
     {
-        // Validate the request
-        $request->validate([
+        $addList = [
             'event_name' => 'required',
             'description' => 'required',
             'start_date' => 'required|date',
-            'end_date' => 'required|date',
+            'end_date' => 'required|date|after:start_date', 
             'status' => 'required',
-        ]);
+            [
+                'end_date.after' => 'The end date must be after the start date.',
+            ]
+        ];
+        $validator = Validator::make($request->all(), $addList);
+        if ($validator->fails()) {
+            $messages = $validator->errors()->messages();
+            return response()->json(array('status' => 'fail', 'message' => "validation failed", "data" => $messages, 'code' => 700), 200);
+        }
 
         
 
         $existingEvent = Events::where('event_name', $request->event_name)->where('id','!=',$request->id)->first();
         if ($existingEvent) {
             // Event name is a duplicate, return response
-            return response()->json(['duplicate' => true]);
+            return response()->json(['status' => 'duplicate']);
         }
 
         $user = Auth::user();
@@ -194,7 +205,7 @@ class EventsController extends Controller
             ///'event_code' => $this->generateRandomString(10),
         );
       
-
+        $status = 'fail';
         if ($request->id > 0) {
             $event = Events::find($request->id);
             $message = 'Event updated successfully';
@@ -205,8 +216,13 @@ class EventsController extends Controller
         }
         $event->fill($data);
         $event->save();
+        return response()->json([
+            'status' => 'success',
+            'message' => '',
+        
+                ], 200);
 
-        return response()->json(['success' => true,'message'=>$message]);
+        // return response()->json(['success' => true,'message'=>$message]);
     }
 
 
@@ -286,7 +302,13 @@ class EventsController extends Controller
         $aColumns = ['candidates.name','candidates.email', 'categories.name','candidates.resume','candidates.created_at'];
         $result = DB::table('candidates')->join('categories','candidates.category_id','categories.id')->where('candidates.event_id',$event_id)
             ->select(['candidates.id','candidates.name', 'categories.name as category_name','candidates.email','candidates.resume','candidates.created_at']);
+            $eventName = DB::table('events')
+            ->where('id', $event_id)
+            ->select('event_name')
+            ->first();
 
+        
+        
         
         $iStart = $request->get('iDisplayStart');
         $iPageSize = $request->get('iDisplayLength');
@@ -340,11 +362,18 @@ class EventsController extends Controller
         //$result->orderBy("id", "DESC");
         $salesData = $result->get();
 
+        // $output = array(
+        //     "sEcho" => intval($request->get('sEcho')),
+        //     "iTotalRecords" => $iTotal,
+        //     "iTotalDisplayRecords" => $iFilteredTotal,
+        //     "aaData" => array()
+        // );
         $output = array(
             "sEcho" => intval($request->get('sEcho')),
             "iTotalRecords" => $iTotal,
             "iTotalDisplayRecords" => $iFilteredTotal,
-            "aaData" => array()
+            "aaData" => array(),
+            "eventName" => $eventName ? $eventName->event_name : ''
         );
         
         foreach ($salesData as $aRow) {
@@ -353,7 +382,7 @@ class EventsController extends Controller
             // $route = route('downloadResume',['id'=> $id]);
             $route= route("downloadResume",['id'=>$id]);
             $resume = '<a target="_blank" href="'.$route.'">Download Resume</a>';
-            $created_at = date("M j, Y, g:i a", strtotime($aRow->created_at));
+            $created_at = date("M j, Y", strtotime($aRow->created_at));
             
             $output['aaData'][] = array(                
                 @utf8_encode($aRow->name),

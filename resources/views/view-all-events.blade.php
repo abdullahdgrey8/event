@@ -59,7 +59,7 @@
                                         <div class="clearfix"></div>
                                     </div> -->
                                 <div class="x_content">
-                                    <h1 class="pb-4">Event Management</h1>
+                                    <h1 class="pb-4 heading">Event Management</h1>
                                     <div class="row">
                                         <div class="col-sm-12">
                                             <div class="card-box ">
@@ -67,33 +67,33 @@
                                                 <div style="display:flex; justify-content:space-between;">
                                                     <div style="display:flex;gap:10px; ">
                                                         <div>
-                                                            <label for="event_code">Event Code:</label><br>
+                                                            <!-- <label for="event_code">Event Code:</label><br> -->
                                                             <input type="text" id="event_code" name="event_code"
-                                                                class="form-control">
+                                                                class="form-control" placeholder="Event Code">
                                                         </div>
                                                         <div>
 
-                                                            <label for="event_name">Event Name:</label><br>
+                                                            <!-- <label for="event_name">Event Name:</label><br> -->
                                                             <input type="text" id="event_name" name="event_name"
-                                                                class="form-control">
+                                                                class="form-control" placeholder="Event Name">
                                                         </div>
 
                                                         <div>
 
-                                                            <label for="start_date">Start Date:</label><br>
+                                                            <!-- <label for="start_date">Start Date:</label><br> -->
                                                             <input type="date" id="start_date" name="start_date"
-                                                                class="form-control">
+                                                                class="form-control" placeholder="Start Date">
                                                         </div>
                                                         <div>
 
 
-                                                            <label for="end_date">End Date:</label><br>
+                                                            <!-- <label for="end_date">End Date:</label><br> -->
                                                             <input type="date" id="end_date" name="end_date"
-                                                                class="form-control">
+                                                                class="form-control" placeholder="End Date">
                                                         </div>
                                                         <div>
 
-                                                            <label for="status">Status:</label><br>
+                                                            <!-- <label for="status">Status:</label><br> -->
                                                             <select name="status" id="status" class="form-control">
                                                                 <option value="">Select Status</option>
                                                                 <option value="1">Active</option>
@@ -101,17 +101,18 @@
                                                             </select>
                                                         </div>
 
-                                                        <div style="margin-top: 25px;">
+                                                        <div>
                                                             <a href=""></a>
                                                             <button id="apply_filters"
-                                                                class="btn btn-secondary">Apply</button>
+                                                                class="btn btn-primary">Apply</button>
                                                         </div>
                                                     </div>
+                                                   
 
-                                                    <div style="margin-top: 25px;">
+                                                    <div >
                                                         <?php
                                                             $baseUrl = url('/');
-                                                            echo '<a id="apply_filters" class="btn btn-primary" href="'.$baseUrl.'/add-event'.'">Add New
+                                                            echo '<a id="apply_filters" class=" btn apply-btn" href="'.$baseUrl.'/add-event'.'">Add New
                                                             Event</a>'
                                                             ?>
                                                     </div>
@@ -126,7 +127,7 @@
                                                             <th>Start date</th>
                                                             <th>End Date</th>
                                                             <th>Status</th>
-                                                            <th>QR-Code</th>
+                                                            <th>QR Code</th>
                                                             <th>URL</th>
                                                             <th>Actions</th>
                                                         </tr>
@@ -195,12 +196,12 @@
         var table = $('#event_table').DataTable({
             "aoColumnDefs": [{
                 "bSortable": false,
-                "aTargets": [0, 7, 8, 9]
+                "aTargets": [6 ,7, 8, 9]
             }],
             "bProcessing": true,
             "bServerSide": true,
             "aaSorting": [
-                [4, "desc"]
+                [0, "asc"]
             ],
             "sPaginationType": "full_numbers",
             "sAjaxSource": "{{ route('get.all.events') }}",
@@ -250,18 +251,24 @@
     });
     </script>
     <style>
-    .x_panel {
-        padding: 0 !important;
+
+#event_table {
+        text-align: center;
     }
 
+    #event_table th,
+    #event_table td {
+        text-align: center;
+    }
     .extra-page-margin {
         margin-left: 0 !important;
         padding: 0 !important;
     }
 
     .x_panel {
+        padding: 0 !important;
         width: 100vw;
-        height: 100vh;
+        height: auto;
     }
 
     .head-color {
@@ -303,7 +310,10 @@
         height: 100%;
         margin: 0;
     }
-
+.heading{
+    font-size:20px;
+    color: black;
+}
     .qr-code {
         display: flex;
         justify-content: center;
@@ -385,6 +395,7 @@
 
     #event_table_info {
         padding-left: 170px;
+        display: none;
     }
 
     .row {
@@ -402,7 +413,21 @@
         z-index: 9999;
         left: 0;
         top: auto;
+        padding-left: 10px;
     }
+    table.dataTable thead .sorting:after, table.dataTable thead .sorting_desc:after, table.dataTable thead .sorting_asc:after{
+        display: none;
+    }
+    .apply-btn{
+        background-color:#FF5C00 ;
+        color: white;
+    }
+    /* table.dataTable thead .sorting_desc:after {
+        display: none;
+    }
+    table.dataTable thead .sorting_asc:after{
+        display: none;
+    } */
     </style>
 
 </body>
